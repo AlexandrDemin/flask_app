@@ -1,0 +1,117 @@
+todo
+
+конфиг с услугами json
+	id
+	name
+	nameTranslit
+конфиг с регионами json
+	id
+	name
+	wrongLayoutName
+	parentalCaseName
+	type
+		"г."
+		"пос."
+		"дер."
+	nameTranslit
+	level
+	hasChildren
+	children
+конфиг с текстами json
+	словарь key value
+конфиг с телефонами json
+	phoneNormal
+	phoneString
+	regionId
+scss foundation
+	настроить settings
+	сборка и минификация
+Кеши и методы их формирования
+	кеш дерева регионов (глобальный объект _regions)
+	кеш словаря регионов по name для поиска (глобальный словарь _regionsByName)
+	кеш словаря регионов по wrongLayoutName для поиска (глобальный словарь _regionsByWrongLayoutName)
+	кеш словаря текстов (глобальный словарь _texts<name, text>)
+	кеш словаря телефонов (глобальный словарь _phones<regionId, phone>)
+Методы получения регионов из кеша
+	по ParentId
+	по массиву уровней, например, [1] или [1, 2]
+	по подстроке name или wrongLayoutName для поиска
+Методы получения телефонов из кеша
+	по regionId или default
+Методы получения текстов из кеша
+	по ключу
+/
+	html template
+		статический текст из конфига текстов
+			title
+			description
+			keywords
+			h1
+		перечисление услуг
+		футер mainFooter
+			перечисление регионов в футере с SEO текстами
+/<service_name_translit>
+	html template
+		статический текст из конфига текстов
+			title
+			description
+			keywords
+			h1
+		крошки
+			Главная / {{ service_name }}
+		перечисление регионов – ссылки на поддомены
+	футер serviceSelectRegionFooter
+		перечисление других услуг в футере с SEO текстами
+	если не найдено service_name_translit
+		кидать 404
+<mainRegion>.domain.ru/<subRegion1/subRegion2/.../subRegionN>
+	https://stackoverflow.com/questions/11021691/dynamic-subdomain-handling-in-a-web-app-flask
+	html template
+		статический текст из конфига текстов
+			title
+			description
+			keywords
+			h1
+		перечисление услуг
+		крошки
+			Главная / {{ mainRegion }} / {{subRegion1}} / ... / {{subRegionN}}
+		футер serviceSelectRegionFooter
+			перечисление регионов, вложенных в <mainRegion>, в футере с SEO текстами
+	если не найден <mainRegion> или один из <subRegion1/subRegion2/.../subRegionN>
+		кидать 404
+<mainRegion>.domain.ru/<service_name_translit>/<subRegion1/subRegion2/.../subRegionN>
+	html template
+		статический текст из конфига текстов
+			title
+			description
+			keywords
+			h1
+			описание услуги
+		перечисление услуг в этом регионе
+		футер serviceFinalFooter
+		крошки
+			Главная / {{ mainRegion }} / {{subRegion1}} / ... / {{subRegionN}}
+	если не найден <mainRegion> или <service_name_translit> или один из <subRegion1/subRegion2/.../subRegionN>
+		кидать 404
+mainFooter
+serviceSelectRegionFooter
+serviceFinalFooter
+header
+	текст из конфига текстов
+		siteName
+		siteMotto
+	телефон из конфига в зависимости от <mainRegion>
+	html template
+контрол поиска по регионам
+	текст из конфига
+	html template
+	js
+	метод для получения json с регионами по подстроке (поиск по регионам)
+написать тесты http://flask.pocoo.org/docs/0.12/testing/
+	перебрать все комбинации регионов и услуг в урлах, проверить, что всё работает
+залить на хостинг и проверить
+	https://help.pythonanywhere.com/pages/Flask/
+	https://help.pythonanywhere.com/pages/FTP
+www / без www
+sitemap.xml
+robots.txt
