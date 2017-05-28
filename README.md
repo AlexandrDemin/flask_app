@@ -11,9 +11,9 @@ Then run flask server
 1. $ export FLASK_APP=main.py
 2. $ flask run
 
-The site vill be on localhost:5000
+The site will be on localhost:5000
 
-If you need to change styles, don't change main.css, change scss in the foundation folder. To compile css, run gulp from the foundation folder
+If you need to change styles, don't change main.css, change scss in the foundation folder. To compile css, run gulp from the foundation folder:
 
 $ cd foundation
 $ gulp
