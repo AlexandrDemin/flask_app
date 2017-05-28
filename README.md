@@ -5,10 +5,15 @@ A simple website made with python flask.
 First install requirements.
 
 $ pip install -r requirements.txt
-$ npm install
 
-Then run gulp and flask server
+Then run flask server
 
-1. $ gulp
-2. $ export FLASK_APP=main.py
-3. $ export FLASK_APP=main.py
+1. $ export FLASK_APP=main.py
+2. $ flask run
+
+The site vill be on localhost:5000
+
+If you need to change styles, don't change main.css, change scss in the foundation folder. To compile css, run gulp from the foundation folder
+
+$ cd foundation
+$ gulp
