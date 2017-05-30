@@ -1,22 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 	<h1 class="background-header">
+		<small class="breadcrumbs"><a href="{{url_for("mainPage")}}">Главная</a> /</small>
 		{{h1}}
 		{% include 'regionSearch.html' %}
 	</h1>
-	<div class="row medium-up-2 large-up-3">
-		{% for service in services %}
-			<div class="column column-block service {{service.nameForUrl}}">
-				<h2>{{service.name}}</h2>
-				<p>{{service.description}}</p>
-				<p>
-					<a class="button" href="{{ url_for("ServiceNoRegion", serviceNameTranslit = service.nameTranslit) }}">Подробнее</a>
-				</p>
-			</div>
-		{% endfor %}
-	</div>
-{% endblock %}
-{% block footerContent %}
 	<div class="row">
 		{% for region in regions %}
 			<div class="medium-6 large-4 columns">

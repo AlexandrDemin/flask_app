@@ -1,0 +1,28 @@
+[
+	{
+		"id": 1,
+		"imageUrl": "../images/car1.jpg",
+		"barrelSize": 5,
+		"hoseLength": 10,
+		"type": "Ассенизаторная"
+	},
+	{
+		"id": 2,
+		"imageUrl": "../images/car2.jpg",
+		"barrelSize": 2,
+		"hoseLength": 12,
+		"type": "Илосос"
+	},
+	{
+		"id": 3,
+		"imageUrl": "../images/car3.jpg",
+		"barrelSize": 4,
+		"hoseLength": 10,
+		"type": "Универсальная"
+	},
+	{
+		"id": 4,
+		"imageUrl": "../images/car4.jpg",
+		"type": "Каналопромывочная"
+	}
+]

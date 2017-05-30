@@ -9,7 +9,8 @@ $ pip install -r requirements.txt
 Then run flask server
 
 1. $ export FLASK_APP=main.py
-2. $ flask run
+2. $ export FLASK_DEBUG=1
+3. $ flask run
 
 The site will be on localhost:5000
 

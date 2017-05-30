@@ -1,55 +1,13 @@
-todo
-база машин
-	50 штук
-	картинка
-	характеристики
-		тип
-		объём бочки
-		длина шланга
-
-	Показывать список рандомных машин от 5 10
-
-конфиг с услугами json
-	id
-	name
-	nameTranslit
-конфиг с регионами json
-	id
-	name
-	wrongLayoutName
-	parentalCaseName
-	coordinates
-	type
-		"г."
-		"пос."
-		"дер."
-	nameTranslit
-	level
-	hasChildren
-	children
-конфиг с текстами json
-	словарь key value
-конфиг с телефонами json
-	phoneNormal
-	phoneString
-	regionId
-scss foundation
-	настроить settings
-	сборка и минификация
-Кеши и методы их формирования
-	кеш дерева регионов (глобальный объект _regions)
-	кеш словаря регионов по name для поиска (глобальный словарь _regionsByName)
-	кеш словаря регионов по wrongLayoutName для поиска (глобальный словарь _regionsByWrongLayoutName)
-	кеш словаря текстов (глобальный словарь _texts<name, text>)
-	кеш словаря телефонов (глобальный словарь _phones<regionId, phone>)
-Методы получения регионов из кеша
-	по ParentId
-	по массиву уровней, например, [1] или [1, 2]
-	по подстроке name или wrongLayoutName для поиска
-Методы получения телефонов из кеша
-	по regionId или default
-Методы получения текстов из кеша
-	по ключу
+Done
+	база машин
+	конфиг с услугами json
+	конфиг с регионами json
+	конфиг с текстами json
+	конфиг с телефонами json
+	scss foundation
+	Кеши и методы их формирования
+	Методы получения данных из кеша
+ToDo
 /
 	html template
 		статический текст из конфига текстов
