@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>{{h1}}</h1>
+	<dl>
+	{% for region in regions %}
+		<dt>{{ region.name }}</dt>
+	    <dd>В {{ region.dativeCaseName }} {% if region.id in [2,4] %} заебись {% else %} охуенно {% endif %}</dd>
+	{% endfor %}
+	</dl>
+{% endblock %}

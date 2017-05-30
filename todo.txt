@@ -1,4 +1,13 @@
 todo
+база машин
+	50 штук
+	картинка
+	характеристики
+		тип
+		объём бочки
+		длина шланга
+
+	Показывать список рандомных машин от 5 10
 
 конфиг с услугами json
 	id
@@ -9,6 +18,7 @@ todo
 	name
 	wrongLayoutName
 	parentalCaseName
+	coordinates
 	type
 		"г."
 		"пос."
@@ -72,6 +82,7 @@ scss foundation
 			description
 			keywords
 			h1
+			карта с кординатами региона
 		перечисление услуг
 		крошки
 			Главная / {{ mainRegion }} / {{subRegion1}} / ... / {{subRegionN}}
