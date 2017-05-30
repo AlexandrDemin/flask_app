@@ -7,7 +7,9 @@
 		"administrativeTypeString":"г.",
 		"nameForUrl":"moskva",
 		"level":1,
-		"parentId":0
+		"parentId":0,
+		"lat": -25.363, 
+		"lng": 131.044
 	},
 	{
 		"id":2,
@@ -17,7 +19,9 @@
 		"administrativeTypeString":"г.",
 		"nameForUrl":"balashikha",
 		"level":2,
-		"parentId":1
+		"parentId":1,
+		"lat": -25.363, 
+		"lng": 131.044
 	},
 	{
 		"id":3,
@@ -27,7 +31,9 @@
 		"administrativeTypeString":"г.",
 		"nameForUrl":"shatura",
 		"level":2,
-		"parentId":1
+		"parentId":1,
+		"lat": -25.363, 
+		"lng": 131.044
 	},
 	{
 		"id":4,
@@ -37,7 +43,9 @@
 		"administrativeTypeString":"г.",
 		"nameForUrl":"sankt-peterburg",
 		"level":1,
-		"parentId":0
+		"parentId":0,
+		"lat": -25.363, 
+		"lng": 131.044
 	},
 	{
 		"id":5,
@@ -47,6 +55,8 @@
 		"administrativeTypeString":"г.",
 		"nameForUrl":"volkhov",
 		"level":2,
-		"parentId":4
+		"parentId":4,
+		"lat": -25.363, 
+		"lng": 131.044
 	}
 ]
