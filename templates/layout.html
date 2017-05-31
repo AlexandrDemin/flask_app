@@ -12,13 +12,21 @@
     </head>
     <body>
         <header class="top-bar">
-            <div class="row">
-                <a href="{{url_for("mainPage")}}" class="top-bar-title">
+            <div class="top-bar-left">
+                <a href="{{url_for("mainPage")}}">
                     <strong>{{siteName}}</strong>
                     <small class="top-bar-motto">
                         {{motto}}
                     </small>
                 </a>
+            </div>
+            <div class="top-bar-right">
+                <strong class="main-phone">
+                    {% autoescape false %}{{mainPhone}}{% endautoescape %}
+                </strong>
+                <small class="phone-meta">
+                    {{mainPhoneMeta}}
+                </small>
             </div>
         </header>
         <div class="content row">

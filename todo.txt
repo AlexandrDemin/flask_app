@@ -10,14 +10,6 @@ Done
 ToDo
 /
 	html template
-		статический текст из конфига текстов
-			title
-			description
-			keywords
-			h1
-		перечисление услуг
-		футер mainFooter
-			перечисление регионов в футере с SEO текстами
 /<service_name_translit>
 	html template
 		статический текст из конфига текстов

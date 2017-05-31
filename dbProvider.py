@@ -24,6 +24,12 @@ _servicesCache = getServicesCache()
 def getServices():
 	return _servicesCache
 
+def getServiceByOrderNameTranslit(nameTranslitOrder):
+	for service in _servicesCache:
+		if service['nameTranslitOrder'] == nameTranslitOrder:
+			return service
+	return None
+
 def getServiceByNameTranslit(serviceNameTranslit):
 	for service in _servicesCache:
 		if service['nameTranslit'] == serviceNameTranslit:
@@ -36,6 +42,25 @@ def getRegionsCache():
 	return regions
 
 _regionsCache = getRegionsCache()
+
+def getRegionByDativeTranslit(dativeTranslit):
+	for region in _regionsCache:
+		if region.['dativeTranslit'] == dativeTranslit:
+			return region
+	return None
+
+def getRegionByNameTranslitAndParentId(nameTranslit, parentId):
+	for region in _regionsCache:
+		if region["parentId"] == parentId and region["nameTranslit"] == nameTranslit:
+			return region
+	return None
+
+def getRegionBySubdomain(subdomain):
+	result = []
+	for region in _regionsCache:
+		if region.get("subdomain", "") == subdomain:
+			return region
+	return None
 
 def getRegionsByParentIds(parentIds):
 	result = []
@@ -72,7 +97,7 @@ def getPhonesCache():
 _phonesCache = getPhonesCache()
 
 def getDefaultPhone():
-	# Номер 8800 с RegionId 1
+	# Номер 8800 с RegionId 0
 	return _phonesCache["0"]
 
 def getPhoneByRegionId(regionId):
