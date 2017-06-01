@@ -45,7 +45,7 @@ _regionsCache = getRegionsCache()
 
 def getRegionByDativeTranslit(dativeTranslit):
 	for region in _regionsCache:
-		if region.['dativeTranslit'] == dativeTranslit:
+		if region['dativeTranslit'] == dativeTranslit:
 			return region
 	return None
 
