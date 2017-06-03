@@ -35,9 +35,7 @@
         <footer class="expanded row">
             <div class="row">
                 {% block footerContent %}{% endblock %}
-                {% autoescape false %}
-                <small>{{copyright}}</small>
-                {% endautoescape %}
+                <small>{{copyright|safe}}</small>
             </div>
         </footer>
     </body>

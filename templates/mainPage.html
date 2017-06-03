@@ -10,7 +10,7 @@
 				<h2>{{service.name}}</h2>
 				<p>{{service.description}}</p>
 				<p>
-					<a class="button" href="{{ url_for("ServiceNoRegion", service = service.nameTranslit) }}">Подробнее</a>
+					<a class="button" href="{{ getLinkForRegionService(serviceId=service.id) }}">Подробнее</a>
 				</p>
 			</div>
 		{% endfor %}
@@ -22,12 +22,12 @@
 		{% for region in regions %}
 			<div class="medium-6 large-4 columns">
 				<strong>
-					<a href="{{url_for("MainPage")}}">{{region.name}}</a>
+					<a href="{{getLinkForRegionService(regionId=region.id)}}">{{region.name}}</a>
 				</strong>
 				<ul class="no-bullet">
 				{% for subregion in region['children'] %}
 					<li>
-						<a href="{{url_for("MainPage")}}">{{subregion.name}}</a>
+						<a href="{{getLinkForRegionService(regionId=subregion.id)}}">{{subregion.name}}</a>
 					</li>
 				{% endfor %}
 				</ul>

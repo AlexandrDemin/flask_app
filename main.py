@@ -5,6 +5,60 @@ app = Flask(__name__)
 
 app.config['SERVER_NAME'] = 'otkachkaseptika.ru:5000'
 
+@app.context_processor
+def utility_processor():
+    def getLinkForRegionService(regionId = None, serviceId = None, order = False):
+        if regionId == None:
+            if serviceId == None:
+                return url_for("MainPage")
+            else:
+                service = db.getServiceById(serviceId)
+                return url_for("ServiceNoRegion", service = service['nameTranslit'])
+        else:
+            region = db.getRegionById(regionId)
+            subdomain = db.getSubdomainByMainRegionId(regionId)
+            if subdomain == None:
+                isMainRegion = False
+                subdomain = db.getSubdomainByRegionId(regionId)
+            else:
+                isMainRegion = True
+            if serviceId == None:
+                if isMainRegion:
+                    return url_for("RegionNoService", subdomain = subdomain)
+                else:
+                    return url_for("RegionService", routeString = getPathForRegionId(regionId), subdomain = subdomain)
+            else:
+                service = db.getServiceById(serviceId)
+                if isMainRegion:
+                    return url_for("RegionNoService", routeString = service['nameTranslit'], subdomain = subdomain)
+                else:
+                    if order:
+                        routeString = service['nameTranslit'] + "-v-" + region['dativeTranslit']
+                        return url_for("RegionService", routeString = routeString, subdomain = subdomain)
+                    else:
+                        routeString = service['nameTranslit'] + "/" + getPathForRegionId(regionId)
+                        return url_for("RegionService", routeString = routeString, subdomain = subdomain)
+    return dict(getLinkForRegionService=getLinkForRegionService)
+
+def getPathForRegionId(regionId):
+    path = ""
+    parents = db.getRegionParents(regionId)
+    parents.pop(0)
+    for parent in parents:
+        path += "/" + parent["nameTranslit"]
+    region = db.getRegionById(regionId)
+    path += "/" + region["nameTranslit"]
+    return path
+
+def getRegionByPathAndParentId(path, parentId):
+    regions = path.split('/')
+    for regionName in regions:
+        region = db.getRegionByNameTranslitAndParentId(regionName, parentId)
+        if region == None:
+            return None
+        parentId = region['id']
+    return region
+
 # No subdomain
 
 @app.route('/')
@@ -62,20 +116,14 @@ def RegionNoService(subdomain):
         regions = db.getRegionsTree()
         )
 
-@app.route('/<serviceVRegione>', subdomain="<subdomain>")
-def OrderService(serviceVRegione, subdomain):
+@app.route('/<path:routeString>', subdomain="<subdomain>")
+def RegionService(routeString, subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         abort(404)
-    serviceAndRegion = serviceVRegione.split("-v-")
+    serviceAndRegion = routeString.split("/")
     service = db.getServiceByNameTranslit(serviceAndRegion[0])
-    if service == None:
-        abort(404)
-    if len(serviceAndRegion) > 1:
-        region = db.getRegionByDativeTranslitAndMainRegion(serviceAndRegion[1], mainRegion['id'])
-        if region == None:
-            abort(404)
-    else:
+    if service != None:
         return render_template('mainRegionService.html',
             siteName = db.getText("header", "siteName"),
             motto = db.getText("header", "motto"),
@@ -88,46 +136,42 @@ def OrderService(serviceVRegione, subdomain):
             copyright = db.getText("footer", "copyright"),
             regions = db.getRegionsTree()
             )
-    return render_template('orderService.html',
-        siteName = db.getText("header", "siteName"),
-        motto = db.getText("header", "motto"),
-        mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = "Звонок бесплатный по России",
-        title = service['name'],
-        description = service['name'],
-        keywords = service['name'],
-        h1 = service['name'],
-        copyright = db.getText("footer", "copyright"),
-        regions = db.getRegionsTree()
-        )
-
-@app.route('/<service>/<path:regions>', subdomain="<subdomain>")
-def RegionsService(service, regions, subdomain):
-    mainRegion = db.getRegionBySubdomain(subdomain)
-    if mainRegion == None:
-        abort(404)
-    service = db.getServiceByNameTranslit(service)
-    if service == None:
-        abort(404)
-    regions = regions.split('/')
-    parentId = mainRegion['id']
-    for regionName in regions:
-        region = db.getRegionByNameTranslitAndParentId(regionName, parentId)
-        if region == None:
-            abort(404)
-        parentId = region['id']
-    return render_template('mainRegionService.html',
-        siteName = db.getText("header", "siteName"),
-        motto = db.getText("header", "motto"),
-        mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = "Звонок бесплатный по России",
-        title = service['name'],
-        description = service['name'],
-        keywords = service['name'],
-        h1 = service['name'],
-        copyright = db.getText("footer", "copyright"),
-        regions = db.getRegionsTree()
-        )
+    else:
+        serviceAndRegion = routeString.split("-v-")
+        service = db.getServiceByNameTranslit(serviceAndRegion[0])
+        if service == None:
+            region = getRegionByPathAndParentId(serviceAndRegion[0], mainRegion['id'])
+            if region == None:
+                abort(404)
+            return render_template('regionNoService.html',
+                siteName = db.getText("header", "siteName"),
+                motto = db.getText("header", "motto"),
+                mainPhone = db.getDefaultPhone()['phoneString'],
+                mainPhoneMeta = "Звонок бесплатный по России",
+                title = db.getText("mainPage", "title"),
+                description = db.getText("mainPage", "description"),
+                keywords = db.getText("mainPage", "keywords"),
+                h1 = db.getText("mainPage", "h1"),
+                copyright = db.getText("footer", "copyright"),
+                services = db.getServices(),
+                regions = db.getRegionsTree()
+                )
+        if len(serviceAndRegion) > 1:
+            region = db.getRegionByDativeTranslitAndMainRegion(serviceAndRegion[1], mainRegion['id'])
+            if region == None:
+                abort(404)
+            return render_template('orderService.html',
+                siteName = db.getText("header", "siteName"),
+                motto = db.getText("header", "motto"),
+                mainPhone = db.getDefaultPhone()['phoneString'],
+                mainPhoneMeta = "Звонок бесплатный по России",
+                title = service['name'],
+                description = service['name'],
+                keywords = service['name'],
+                h1 = service['name'],
+                copyright = db.getText("footer", "copyright"),
+                regions = db.getRegionsTree()
+                )
 
 # Error handling
 

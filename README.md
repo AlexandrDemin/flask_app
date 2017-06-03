@@ -14,7 +14,7 @@ Then run flask server
 
 The site will be on localhost:5000
 
-If you need to change styles, don't change main.css, change scss in the foundation folder. To compile css, run gulp from the foundation folder:
+If you want to change styles, don't change main.css. Edit scss files in the foundation folder. To compile css, run gulp from the foundation folder:
 
 1. $ cd foundation
 2. $ gulp
