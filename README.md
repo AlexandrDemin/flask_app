@@ -16,6 +16,5 @@ The site will be on localhost:5000
 
 If you need to change styles, don't change main.css, change scss in the foundation folder. To compile css, run gulp from the foundation folder:
 
-$ cd foundation
-
-$ gulp
+1. $ cd foundation
+2. $ gulp

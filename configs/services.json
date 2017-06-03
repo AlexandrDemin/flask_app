@@ -2,43 +2,37 @@
 	{
 		"id": 1,
 		"name": "Откачка септиков",
-		"nameTranslit": "otkachka-septikov",
-		"nameTranslitOrder": "zakazat-otkachku-septika",
+		"nameTranslit": "otkachka-septika",
 		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях. Работаем по всей России."
 	},
 	{
 		"id": 2,
 		"name": "Очистка выгребных ям",
 		"nameTranslit": "ochistka-vygrebnykh-yam",
-		"nameTranslitOrder": "zakazat-otkachku-vygrebnykh-yam",
 		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях. Работаем по всей России."
 	},
 	{
 		"id": 3,
 		"name": "Очистка биотуалетов",
 		"nameTranslit": "ochistka-biotualetov",
-		"nameTranslitOrder": "zakazat-otkachku-biotualetov",
 		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях. Работаем по всей России."
 	},
 	{
 		"id": 4,
 		"name": "Откачка канализации",
 		"nameTranslit": "otkachka-kanalizacii",
-		"nameTranslitOrder": "zakazat-otkachku-kanalizacii",
 		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях. Работаем по всей России."
 	},
 	{
 		"id": 5,
 		"name": "Аренда илососной машины",
 		"nameTranslit": "arenda-ilososnoj-machiny",
-		"nameTranslitOrder": "arendovat-ilososnuju-machinu",
 		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях. Работаем по всей России."
 	},
 	{
 		"id": 6,
 		"name": "Откачка жидких бытовых отходов (ЖБО)",
 		"nameTranslit": "otkachka-gidkih-bytovyh-othodov",
-		"nameTranslitOrder": "zakazat-otkachku-gbo",
 		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях. Работаем по всей России."
 	}
 ]

@@ -22,12 +22,12 @@
 		{% for region in regions %}
 			<div class="medium-6 large-4 columns">
 				<strong>
-					<a href="{{url_for("mainPage")}}">{{region.name}}</a>
+					<a href="{{url_for("MainPage")}}">{{region.name}}</a>
 				</strong>
 				<ul class="no-bullet">
 				{% for subregion in region['children'] %}
 					<li>
-						<a href="{{url_for("mainPage")}}">{{subregion.name}}</a>
+						<a href="{{url_for("MainPage")}}">{{subregion.name}}</a>
 					</li>
 				{% endfor %}
 				</ul>

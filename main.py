@@ -8,7 +8,7 @@ app.config['SERVER_NAME'] = 'otkachkaseptika.ru:5000'
 # No subdomain
 
 @app.route('/')
-def mainPage():
+def MainPage():
     return render_template('mainPage.html',
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto"),
@@ -62,15 +62,33 @@ def RegionNoService(subdomain):
         regions = db.getRegionsTree()
         )
 
-@app.route('/<service>', subdomain="<subdomain>")
-def MainRegionService(service, subdomain):
-    service = db.getServiceByNameTranslit(service)
+@app.route('/<serviceVRegione>', subdomain="<subdomain>")
+def OrderService(serviceVRegione, subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    serviceAndRegion = serviceVRegione.split("-v-")
+    service = db.getServiceByNameTranslit(serviceAndRegion[0])
     if service == None:
         abort(404)
-    region = db.getRegionBySubdomain(subdomain)
-    if region == None:
-        abort(404)
-    return render_template('mainRegionService.html',
+    if len(serviceAndRegion) > 1:
+        region = db.getRegionByDativeTranslitAndMainRegion(serviceAndRegion[1], mainRegion['id'])
+        if region == None:
+            abort(404)
+    else:
+        return render_template('mainRegionService.html',
+            siteName = db.getText("header", "siteName"),
+            motto = db.getText("header", "motto"),
+            mainPhone = db.getDefaultPhone()['phoneString'],
+            mainPhoneMeta = "Звонок бесплатный по России",
+            title = service['name'],
+            description = service['name'],
+            keywords = service['name'],
+            h1 = service['name'],
+            copyright = db.getText("footer", "copyright"),
+            regions = db.getRegionsTree()
+            )
+    return render_template('orderService.html',
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto"),
         mainPhone = db.getDefaultPhone()['phoneString'],
@@ -99,30 +117,6 @@ def RegionsService(service, regions, subdomain):
             abort(404)
         parentId = region['id']
     return render_template('mainRegionService.html',
-        siteName = db.getText("header", "siteName"),
-        motto = db.getText("header", "motto"),
-        mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = "Звонок бесплатный по России",
-        title = service['name'],
-        description = service['name'],
-        keywords = service['name'],
-        h1 = service['name'],
-        copyright = db.getText("footer", "copyright"),
-        regions = db.getRegionsTree()
-        )
-
-@app.route('/<orderService>-v-<regione>', subdomain="<subdomain>")
-def OrderService(orderService, regione, subdomain):
-    mainRegion = db.getRegionBySubdomain(subdomain)
-    if mainRegion == None:
-        abort(404)
-    service = db.getServiceByOrderNameTranslit(orderService)
-    if service == None:
-        abort(404)
-    region = db.getRegionByDativeTranslit(regione)
-    if region == None:
-        abort(404)
-    return render_template('orderService.html',
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto"),
         mainPhone = db.getDefaultPhone()['phoneString'],

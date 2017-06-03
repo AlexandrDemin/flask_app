@@ -24,12 +24,6 @@ _servicesCache = getServicesCache()
 def getServices():
 	return _servicesCache
 
-def getServiceByOrderNameTranslit(nameTranslitOrder):
-	for service in _servicesCache:
-		if service['nameTranslitOrder'] == nameTranslitOrder:
-			return service
-	return None
-
 def getServiceByNameTranslit(serviceNameTranslit):
 	for service in _servicesCache:
 		if service['nameTranslit'] == serviceNameTranslit:
@@ -43,10 +37,20 @@ def getRegionsCache():
 
 _regionsCache = getRegionsCache()
 
-def getRegionByDativeTranslit(dativeTranslit):
+def isChildrenRegion(regionId, mainRegionId):
+	parents = [mainRegionId]
+	while len(parents) > 0:
+		regions = getRegionIdsByParentIds(parents)
+		if regionId in regions:
+			return True
+		parents = regions
+	return False
+
+def getRegionByDativeTranslitAndMainRegion(dativeTranslit, mainRegionId):
 	for region in _regionsCache:
 		if region['dativeTranslit'] == dativeTranslit:
-			return region
+			if isChildrenRegion(region['id'], mainRegionId):
+				return region
 	return None
 
 def getRegionByNameTranslitAndParentId(nameTranslit, parentId):
@@ -55,12 +59,12 @@ def getRegionByNameTranslitAndParentId(nameTranslit, parentId):
 			return region
 	return None
 
-def getRegionBySubdomain(subdomain):
+def getRegionIdsByParentIds(parentIds):
 	result = []
 	for region in _regionsCache:
-		if region.get("subdomain", "") == subdomain:
-			return region
-	return None
+		if region["parentId"] in parentIds:
+			result.append(region['id'])
+	return result
 
 def getRegionsByParentIds(parentIds):
 	result = []
@@ -89,10 +93,29 @@ def getRegionsTree(parents=None, depth=1):
 			result.append(region)
 	return result
 
+def getRegionById(id):
+	for region in _regionsCache:
+		if region["id"] == id:
+			return region
+	return None
+
+def getSubdomainsCache():
+	json_data = open("configs/subdomains.json").read()
+	subdomains = json.loads(json_data)
+	return subdomains
+
+_subdomainsCache = getSubdomainsCache()
+
+def getRegionBySubdomain(subdomainString):
+	for subdomain in _subdomainsCache:
+		if subdomain['subdomain'] == subdomainString:
+			return getRegionById(subdomain['regionId'])
+	return None
+
 def getPhonesCache():
 	json_data = open("configs/phones.json").read()
-	texts = json.loads(json_data)
-	return texts
+	phones = json.loads(json_data)
+	return phones
 
 _phonesCache = getPhonesCache()
 
