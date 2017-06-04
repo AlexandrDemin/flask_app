@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="background-header row">
+		<small class="breadcrumbs">
+			<a href="{{url_for("MainPage")}}">Главная</a>&nbsp;/
+			{% if region != None %}
+				<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
+			{% endif %}
+			{% if parentRegions != None %}
+				{% for region in parentRegions %}
+					<a href="{{getLinkForRegionService(serviceId=service.id, regionId=region.id)}}">{{region.name}}</a>&nbsp;/
+				{% endfor %}
+			{% endif %}
+		</small>
+		<h1>{{h1}}</h1>
+	</div>
+	<div class="row text-center">
+		<h2>Выберите регион из списка или воспользуйтесь поиском</h2>
+		{% include 'regionSearch.html' %}
+	</div>
+	<div class="row">
+		{% for region in regions %}
+			<div class="medium-6 large-4 columns">
+				<strong>
+					<a href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id)}}">{{region.name}}</a>
+				</strong>
+				<ul class="no-bullet">
+				{% for subregion in region['children'] %}
+					<li>
+						<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id)}}">{{subregion.name}}</a>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+		{% endfor %}
+	</div>
+	{% include 'callUsBottom.html' %}
+{% endblock %}

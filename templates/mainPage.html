@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="background-header">
+	<div class="background-header row">
 		<h1>{{h1}}</h1>
 		{% include 'regionSearch.html' %}
 	</div>
@@ -10,7 +10,7 @@
 				<h2>{{service.name}}</h2>
 				<p>{{service.description}}</p>
 				<p>
-					<a class="button" href="{{ getLinkForRegionService(serviceId=service.id) }}">Подробнее</a>
+					<a class="button" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None) }}">Подробнее</a>
 				</p>
 			</div>
 		{% endfor %}

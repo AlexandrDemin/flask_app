@@ -119,14 +119,14 @@ def getRegionsByLevel(levels):
 			result.append(region)
 	return result
 
-def getRegionsTree(parents=None, depth=1):
+def getRegionsTree(parentIds=None, depth=1):
 	result = []
-	regions = getRegionsByLevel([1]) if parents == None else getRegionsByParentIds(parents);
+	regions = getRegionsByLevel([1]) if parentIds == None else getRegionsByParentIds(parentIds);
 	if depth > 0:
 		for region in regions:
 			regionId = region['id']
 			if depth > 1:
-				region['children'] = getRegionsTree(parents = [regionId], depth = depth - 1)
+				region['children'] = getRegionsTree(parentIds = [regionId], depth = depth - 1)
 			else:
 				region['children'] = getRegionsByParentIds([regionId])
 			result.append(region)

@@ -39,6 +39,19 @@
 		"lng": 131.044
 	},
 	{
+		"id":15,
+		"name":"Шатурский район",
+		"wrongLayoutName":"Ifnehcrbq hfqjy",
+		"dativeCaseName":"Шатурском районе",
+		"administrativeTypeString":"",
+		"nameTranslit":"shatursky-rayon",
+		"dativeTranslit":"shaturskom-rayone",
+		"level":2,
+		"parentId":1,
+		"lat": -25.363, 
+		"lng": 131.044
+	},
+	{
 		"id":4,
 		"name":"Шатура",
 		"wrongLayoutName":"Ifnehf",
@@ -46,8 +59,8 @@
 		"administrativeTypeString":"г.",
 		"nameTranslit":"shatura",
 		"dativeTranslit":"shature",
-		"level":2,
-		"parentId":1,
+		"level":3,
+		"parentId":15,
 		"lat": -25.363, 
 		"lng": 131.044
 	},
@@ -99,7 +112,7 @@
 		"nameTranslit":"krasnodarsky-kray",
 		"dativeTranslit":"krasnodarskom-kraje",
 		"level":1,
-		"parentId":6,
+		"parentId":0,
 		"lat": -25.363, 
 		"lng": 131.044
 	},
@@ -177,7 +190,7 @@
 		"nameTranslit":"cherusti",
 		"dativeTranslit":"cherustyah",
 		"level":3,
-		"parentId":4,
+		"parentId":15,
 		"lat": 55.5444767, 
 		"lng": 39.9911065
 	}

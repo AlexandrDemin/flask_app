@@ -3,7 +3,9 @@ from flask import Flask, url_for, render_template, abort
 
 app = Flask(__name__)
 
-app.config['SERVER_NAME'] = 'otkachkaseptika.ru:5000'
+app.config['SERVER_NAME'] = 'govnosos.pro:5000'
+
+# Helpers
 
 @app.context_processor
 def utility_processor():
@@ -30,13 +32,15 @@ def utility_processor():
             else:
                 service = db.getServiceById(serviceId)
                 if isMainRegion:
-                    return url_for("RegionNoService", routeString = service['nameTranslit'], subdomain = subdomain)
+                    return url_for("RegionService", routeString = service['nameTranslit'], subdomain = subdomain)
                 else:
+                    if not (region['hasChildren']):
+                        order = True
                     if order:
                         routeString = service['nameTranslit'] + "-v-" + region['dativeTranslit']
                         return url_for("RegionService", routeString = routeString, subdomain = subdomain)
                     else:
-                        routeString = service['nameTranslit'] + "/" + getPathForRegionId(regionId)
+                        routeString = service['nameTranslit'] + getPathForRegionId(regionId)
                         return url_for("RegionService", routeString = routeString, subdomain = subdomain)
     return dict(getLinkForRegionService=getLinkForRegionService)
 
@@ -67,14 +71,15 @@ def MainPage():
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto"),
         mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = "Звонок бесплатный по России",
+        mainPhoneMeta = db.getText("phoneDescription", "8800"),
         title = db.getText("mainPage", "title"),
         description = db.getText("mainPage", "description"),
         keywords = db.getText("mainPage", "keywords"),
         h1 = db.getText("mainPage", "h1"),
         copyright = db.getText("footer", "copyright"),
         services = db.getServices(),
-        regions = db.getRegionsTree()
+        regions = db.getRegionsTree(),
+        region = None
         )
 
 @app.route('/<service>')
@@ -82,17 +87,20 @@ def ServiceNoRegion(service):
     service = db.getServiceByNameTranslit(service)
     if service == None:
         abort(404)
-    return render_template('serviceNoRegion.html',
+    return render_template('selectRegionForService.html',
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto"),
         mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = "Звонок бесплатный по России",
+        mainPhoneMeta = db.getText("phoneDescription", "8800"),
         title = service['name'],
         description = service['name'],
         keywords = service['name'],
         h1 = service['name'],
+        service = service,
+        parentRegions = None,
         copyright = db.getText("footer", "copyright"),
-        regions = db.getRegionsTree()
+        regions = db.getRegionsTree(),
+        region = None
         )
 
 # With subdomain
@@ -102,18 +110,20 @@ def RegionNoService(subdomain):
     region = db.getRegionBySubdomain(subdomain)
     if region == None:
         abort(404)
-    return render_template('regionNoService.html',
+    return render_template('selectServiceForRegion.html',
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto"),
-        mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = "Звонок бесплатный по России",
-        title = db.getText("mainPage", "title"),
-        description = db.getText("mainPage", "description"),
-        keywords = db.getText("mainPage", "keywords"),
-        h1 = db.getText("mainPage", "h1"),
+        mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
+        mainPhoneMeta = db.getText("phoneDescription", "other"),
+        title = db.getText("regionNoService", "title").format(region['dativeCaseName']),
+        description = db.getText("regionNoService", "description").format(region['dativeCaseName']),
+        keywords = db.getText("regionNoService", "keywords"),
+        h1 = db.getText("regionNoService", "h1").format(region['dativeCaseName']),
         copyright = db.getText("footer", "copyright"),
         services = db.getServices(),
-        regions = db.getRegionsTree()
+        region = region,
+        parentRegions = db.getRegionParents(region['id']),
+        regions = db.getRegionsTree(parentIds=[region['id']])
         )
 
 @app.route('/<path:routeString>', subdomain="<subdomain>")
@@ -124,17 +134,31 @@ def RegionService(routeString, subdomain):
     serviceAndRegion = routeString.split("/")
     service = db.getServiceByNameTranslit(serviceAndRegion[0])
     if service != None:
-        return render_template('mainRegionService.html',
+        regionPath = routeString.replace(service['nameTranslit'] + "/", "")
+        region = getRegionByPathAndParentId(path=regionPath, parentId=mainRegion['id'])
+        dativeRegionName = mainRegion['dativeCaseName']
+        parentIds=[mainRegion['id']]
+        parentRegions = db.getRegionParents(mainRegion['id'])
+        regionOrMainRegion = mainRegion
+        if region != None:
+            dativeRegionName = region['dativeCaseName']
+            parentIds=[region['id']]
+            parentRegions = db.getRegionParents(region['id'])
+            regionOrMainRegion = region
+        return render_template('selectRegionForService.html',
             siteName = db.getText("header", "siteName"),
             motto = db.getText("header", "motto"),
-            mainPhone = db.getDefaultPhone()['phoneString'],
-            mainPhoneMeta = "Звонок бесплатный по России",
-            title = service['name'],
-            description = service['name'],
-            keywords = service['name'],
-            h1 = service['name'],
+            mainPhone = db.getPhoneByRegionId(mainRegion['id'])['phoneString'],
+            mainPhoneMeta = db.getText("phoneDescription", "other"),
+            title = db.getText("mainRegionService", "title").format(service['name'], dativeRegionName),
+            description = db.getText("mainRegionService", "description").format(service['name'], dativeRegionName, service['description']),
+            keywords = db.getText("mainRegionService", "keywords").format(service['name'], dativeRegionName),
+            h1 = db.getText("mainRegionService", "h1").format(service['name'], dativeRegionName),
+            service = service,
+            parentRegions = parentRegions,
             copyright = db.getText("footer", "copyright"),
-            regions = db.getRegionsTree()
+            regions = db.getRegionsTree(parentIds=parentIds),
+            region = regionOrMainRegion
             )
     else:
         serviceAndRegion = routeString.split("-v-")
@@ -143,34 +167,44 @@ def RegionService(routeString, subdomain):
             region = getRegionByPathAndParentId(serviceAndRegion[0], mainRegion['id'])
             if region == None:
                 abort(404)
-            return render_template('regionNoService.html',
+            return render_template('selectServiceForRegion.html',
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto"),
-                mainPhone = db.getDefaultPhone()['phoneString'],
-                mainPhoneMeta = "Звонок бесплатный по России",
-                title = db.getText("mainPage", "title"),
-                description = db.getText("mainPage", "description"),
-                keywords = db.getText("mainPage", "keywords"),
-                h1 = db.getText("mainPage", "h1"),
+                mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
+                mainPhoneMeta = db.getText("phoneDescription", "other"),
+                title = db.getText("regionNoService", "title").format(region['dativeCaseName']),
+                description = db.getText("regionNoService", "description").format(region['dativeCaseName']),
+                keywords = db.getText("regionNoService", "keywords"),
+                h1 = db.getText("regionNoService", "h1").format(region['dativeCaseName']),
                 copyright = db.getText("footer", "copyright"),
                 services = db.getServices(),
+                region = region,
+                parentRegions = db.getRegionParents(region['id']),
                 regions = db.getRegionsTree()
                 )
         if len(serviceAndRegion) > 1:
             region = db.getRegionByDativeTranslitAndMainRegion(serviceAndRegion[1], mainRegion['id'])
             if region == None:
                 abort(404)
+            services = db.getServices()[:]
+            services.remove(db.getServiceById(1))
             return render_template('orderService.html',
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto"),
-                mainPhone = db.getDefaultPhone()['phoneString'],
-                mainPhoneMeta = "Звонок бесплатный по России",
-                title = service['name'],
-                description = service['name'],
-                keywords = service['name'],
-                h1 = service['name'],
+                mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
+                mainPhoneMeta = db.getText("phoneDescription", "other"),
+                title = db.getText("orderService", "title").format(service['name'], region['dativeCaseName']),
+                description = db.getText("orderService", "description").format(service['name'], region['dativeCaseName']),
+                keywords = db.getText("orderService", "keywords"),
+                h1 = db.getText("orderService", "h1").format(service['name'], region['dativeCaseName']),
                 copyright = db.getText("footer", "copyright"),
-                regions = db.getRegionsTree()
+                services = services,
+                region = region,
+                service = service,
+                parentRegions = db.getRegionParents(region['id']),
+                regions = db.getRegionsTree(),
+                otherServicesHeader = "Другие услуги в {}".format(region['dativeCaseName']),
+                contentBlocks = db.getText("orderService", str(service['id']))
                 )
 
 # Error handling

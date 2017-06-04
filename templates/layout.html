@@ -22,7 +22,7 @@
             </div>
             <div class="top-bar-right">
                 <strong class="main-phone">
-                    {% autoescape false %}{{mainPhone}}{% endautoescape %}
+                    {{mainPhone|safe}}
                 </strong>
                 <small class="phone-meta">
                     {{mainPhoneMeta}}
