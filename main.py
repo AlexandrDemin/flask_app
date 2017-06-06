@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, abort
 
 app = Flask(__name__)
 
-app.config['SERVER_NAME'] = 'govnosos.pro:5000'
+app.config['SERVER_NAME'] = 'govnosos.pro'
 
 # Helpers
 
@@ -65,7 +65,7 @@ def getRegionByPathAndParentId(path, parentId):
 
 # No subdomain
 
-@app.route('/')
+@app.route('/', subdomain='www')
 def MainPage():
     return render_template('mainPage.html',
         siteName = db.getText("header", "siteName"),
@@ -82,7 +82,7 @@ def MainPage():
         region = None
         )
 
-@app.route('/<service>')
+@app.route('/<service>', subdomain='www')
 def ServiceNoRegion(service):
     service = db.getServiceByNameTranslit(service)
     if service == None:
