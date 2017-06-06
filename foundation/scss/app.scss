@@ -49,7 +49,4 @@
 
 @include motion-ui-transitions;
 @include motion-ui-animations;
-
-footer {
-	background-color: $medium-gray;
-}
+@import'custom';

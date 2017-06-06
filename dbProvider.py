@@ -1,10 +1,13 @@
 import json
 import random
 
+absolutePath = '/home/noidea91/flask_app/'
+#absolutePath = ''
+
 # Texts
 
 def getTextsCache():
-	json_data = open("configs/texts.json").read()
+	json_data = open(absolutePath + "configs/texts.json").read()
 	texts = json.loads(json_data)
 	return texts
 
@@ -17,7 +20,7 @@ def getText(action, stringName=""):
 		return _textsCache[action].get(stringName)
 
 def getServicesCache():
-	json_data = open("configs/services.json").read()
+	json_data = open(absolutePath + "configs/services.json").read()
 	texts = json.loads(json_data)
 	return texts
 
@@ -43,7 +46,7 @@ def getServiceById(serviceId):
 # Regions
 
 def getRegionsCache():
-	json_data = open("configs/regions.json").read()
+	json_data = open(absolutePath + "configs/regions.json").read()
 	regions = json.loads(json_data)
 	for region in regions:
 		region['childrenIds'] = []
@@ -141,7 +144,7 @@ def getRegionById(id):
 # Subdomains
 
 def getSubdomainsCache():
-	json_data = open("configs/subdomains.json").read()
+	json_data = open(absolutePath + "configs/subdomains.json").read()
 	subdomains = json.loads(json_data)
 	for subdomain in subdomains:
 		subdomain['allChildrenRegionIds'] = getAllChildrenRegionIds(subdomain['regionId'])
@@ -170,7 +173,7 @@ def getSubdomainByRegionId(regionId):
 # Phones
 
 def getPhonesCache():
-	json_data = open("configs/phones.json").read()
+	json_data = open(absolutePath + "configs/phones.json").read()
 	phones = json.loads(json_data)
 	return phones
 
@@ -186,7 +189,7 @@ def getPhoneByRegionId(regionId):
 # Cars
 
 def getCarsCache():
-	json_data = open("configs/cars.json").read()
+	json_data = open(absolutePath + "configs/cars.json").read()
 	texts = json.loads(json_data)
 	return texts
 

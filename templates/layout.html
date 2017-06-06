@@ -12,31 +12,42 @@
     </head>
     <body>
         <header class="top-bar">
-            <div class="top-bar-left">
-                <a href="{{url_for("MainPage")}}">
-                    <strong>{{siteName}}</strong>
-                    <small class="top-bar-motto">
-                        {{motto}}
+            <div class="row">
+                <div class="top-bar-left">
+                    <a href="{{url_for("MainPage")}}">
+                        <h4 class="top-bar-logo"><strong>{{siteName}}</strong></h4>
+                        <small class="top-bar-motto">
+                            {{motto|safe}}
+                        </small>
+                    </a>
+                </div>
+                <div class="top-bar-right text-right hide-for-small-only">
+                    <h4 class="main-phone">
+                        <strong>{{mainPhone|safe}}</strong>
+                    </h4>
+                    <small class="main-phone-meta">
+                        {{mainPhoneMeta}}
                     </small>
-                </a>
-            </div>
-            <div class="top-bar-right">
-                <strong class="main-phone">
-                    {{mainPhone|safe}}
-                </strong>
-                <small class="phone-meta">
-                    {{mainPhoneMeta}}
-                </small>
+                </div>
             </div>
         </header>
-        <div class="content row">
+        <div class="main-content">
+            <div class="row show-for-small-only">
+                <h4>
+                    {{mainPhone|safe}}
+                </h4>
+                <p>
+                    {{mainPhoneMeta}}
+                </p>
+                <a class="show-for-small-only button" href="tel:{{mainPhoneLink}}">Позвонить</a>
+            </div>
             {% block content %}{% endblock %}
         </div>
         <footer class="expanded row">
-            <div class="row">
                 {% block footerContent %}{% endblock %}
-                <small>{{copyright|safe}}</small>
-            </div>
+                <div class="row">
+                    <div class="small-12 columns">{{copyright|safe}}</div>
+                </div>
         </footer>
     </body>
 </html>

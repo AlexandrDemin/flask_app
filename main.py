@@ -192,6 +192,7 @@ def RegionService(routeString, subdomain):
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto"),
                 mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
+                mainPhoneLink = db.getPhoneByRegionId(region['id'])['phoneNormal'],
                 mainPhoneMeta = db.getText("phoneDescription", "other"),
                 title = db.getText("orderService", "title").format(service['name'], region['dativeCaseName']),
                 description = db.getText("orderService", "description").format(service['name'], region['dativeCaseName']),

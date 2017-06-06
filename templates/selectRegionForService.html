@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 	<div class="background-header row">
-		<small class="breadcrumbs">
+		<div class="breadcrumbs">
 			<a href="{{url_for("MainPage")}}">Главная</a>&nbsp;/
 			{% if region != None %}
 				<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
@@ -11,8 +11,8 @@
 					<a href="{{getLinkForRegionService(serviceId=service.id, regionId=region.id)}}">{{region.name}}</a>&nbsp;/
 				{% endfor %}
 			{% endif %}
-		</small>
-		<h1>{{h1}}</h1>
+		</div>
+		<h1>{{h1|safe}}</h1>
 	</div>
 	<div class="row text-center">
 		<h2>Выберите регион из списка или воспользуйтесь поиском</h2>

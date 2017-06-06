@@ -50,29 +50,30 @@ $global-font-size: 100%;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #1779ba,
-  secondary: #767676,
+  primary: #4B89A2,
+  secondary: #9E9DA3,
   success: #3adb76,
   warning: #ffae00,
-  alert: #cc4b37,
+  alert: #F05024,
 );
-$light-gray: #e6e6e6;
-$medium-gray: #cacaca;
-$dark-gray: #8a8a8a;
-$black: #0a0a0a;
-$white: #fefefe;
-$body-background: $white;
+$light-gray: #F3F3F5;
+$medium-gray: #CBCCD0;
+$dark-gray: #8C8D91;
+$black: #252628;
+$white: #FFFCF9;
+$body-background: $light-gray;
 $body-font-color: $black;
 $body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 $body-antialiased: true;
-$global-margin: 1rem;
-$global-padding: 1rem;
+$global-margin: 2rem;
+$global-padding: 2rem;
 $global-weight-normal: normal;
 $global-weight-bold: bold;
 $global-radius: 4px;
 $global-text-direction: ltr;
 $global-flexbox: false;
 $print-transparent-backgrounds: true;
+$global-shadow: 0 4px 6px rgba($dark-gray, 0.4);
 
 @include add-foundation-colors;
 
@@ -98,7 +99,7 @@ $grid-column-gutter: (
   small: 20px,
   medium: 30px,
 );
-$grid-column-align-edge: true;
+$grid-column-align-edge: false;
 $block-grid-max: 8;
 
 // 4. Base Typography
@@ -228,7 +229,7 @@ $badge-font-size: 0.6rem;
 // 10. Breadcrumbs
 // ---------------
 
-$breadcrumbs-margin: 0 0 $global-margin 0;
+$breadcrumbs-margin: 0;
 $breadcrumbs-item-font-size: rem-calc(11);
 $breadcrumbs-item-color: $primary-color;
 $breadcrumbs-item-color-current: $black;
@@ -289,7 +290,7 @@ $card-background: $white;
 $card-font-color: $body-font-color;
 $card-divider-background: $light-gray;
 $card-border: 1px solid $light-gray;
-$card-shadow: none;
+$card-shadow: $global-shadow;
 $card-border-radius: $global-radius;
 $card-padding: $global-padding;
 $card-margin: $global-margin;
@@ -612,8 +613,8 @@ $tooltip-radius: $global-radius;
 // 37. Top Bar
 // -----------
 
-$topbar-padding: 0.5rem;
-$topbar-background: $light-gray;
+$topbar-padding: $global-padding/2;
+$topbar-background: $white;
 $topbar-submenu-background: $topbar-background;
 $topbar-title-spacing: 0.5rem 1rem 0.5rem 0;
 $topbar-input-width: 200px;
