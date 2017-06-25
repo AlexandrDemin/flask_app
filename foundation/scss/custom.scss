@@ -85,6 +85,7 @@ footer {
 	display: block;
 	margin-bottom: 0;
 	z-index: 1;
+	border-radius: 0;
 }
 
 .map {
@@ -92,7 +93,8 @@ footer {
 	border-radius: $global-radius;
 	background-color: $medium-gray;
 	box-shadow: $global-shadow;
-	overflow: hidden;
+	-webkit-transform: translate3d(0px, 0px, 0px);
+	-webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 @media (max-width:640px) {
