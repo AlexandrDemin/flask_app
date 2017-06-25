@@ -2,7 +2,7 @@
 {% block content %}
 	<div class="background-header row">
 		<div class="breadcrumbs">
-			<a href="{{url_for("MainPage")}}">Главная</a>&nbsp;/
+			<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
 			{% if region != None %}
 				<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
 			{% endif %}
@@ -22,7 +22,7 @@
 		{% for region in regions %}
 			<div class="medium-6 large-4 columns">
 				<strong>
-					<a href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id)}}">{{region.name}}</a>
+					<a href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id, order=True)}}">{{region.name}}</a>
 				</strong>
 				<ul class="no-bullet">
 				{% for subregion in region['children'] %}

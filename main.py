@@ -1,8 +1,10 @@
 import dbProvider as db
+from operator import itemgetter
 from flask import Flask, url_for, render_template, abort
 
 app = Flask(__name__)
 
+# app.config['SERVER_NAME'] = 'govnosos.pro:5000'
 app.config['SERVER_NAME'] = 'govnosos.pro'
 
 # Helpers
@@ -12,10 +14,10 @@ def utility_processor():
     def getLinkForRegionService(regionId = None, serviceId = None, order = False):
         if regionId == None:
             if serviceId == None:
-                return url_for("MainPage")
+                return url_for("RegionNoService", subdomain = 'www')
             else:
                 service = db.getServiceById(serviceId)
-                return url_for("ServiceNoRegion", service = service['nameTranslit'])
+                return url_for("RegionService", routeString = service['nameTranslit'], subdomain = 'www')
         else:
             region = db.getRegionById(regionId)
             subdomain = db.getSubdomainByMainRegionId(regionId)
@@ -42,12 +44,13 @@ def utility_processor():
                     else:
                         routeString = service['nameTranslit'] + getPathForRegionId(regionId)
                         return url_for("RegionService", routeString = routeString, subdomain = subdomain)
-    return dict(getLinkForRegionService=getLinkForRegionService)
+    def getLen(array):
+        return len(array)
+    return dict(getLinkForRegionService=getLinkForRegionService, getLen=getLen)
 
 def getPathForRegionId(regionId):
     path = ""
-    parents = db.getRegionParents(regionId)
-    parents.pop(0)
+    parents = db.getRegionParentsSorted(regionId)
     for parent in parents:
         path += "/" + parent["nameTranslit"]
     region = db.getRegionById(regionId)
@@ -62,7 +65,7 @@ def getRegionByPathAndParentId(path, parentId):
             return None
         parentId = region['id']
     return region
-
+'''
 # No subdomain
 
 @app.route('/', subdomain='www')
@@ -102,8 +105,9 @@ def ServiceNoRegion(service):
         regions = db.getRegionsTree(),
         region = None
         )
-
+'''
 # With subdomain
+# TODO сделать на www москву
 
 @app.route('/', subdomain="<subdomain>")
 def RegionNoService(subdomain):
@@ -122,7 +126,7 @@ def RegionNoService(subdomain):
         copyright = db.getText("footer", "copyright"),
         services = db.getServices(),
         region = region,
-        parentRegions = db.getRegionParents(region['id']),
+        parentRegions = db.getRegionParentsSorted(region['id']),
         regions = db.getRegionsTree(parentIds=[region['id']])
         )
 
@@ -138,12 +142,12 @@ def RegionService(routeString, subdomain):
         region = getRegionByPathAndParentId(path=regionPath, parentId=mainRegion['id'])
         dativeRegionName = mainRegion['dativeCaseName']
         parentIds=[mainRegion['id']]
-        parentRegions = db.getRegionParents(mainRegion['id'])
+        parentRegions = db.getRegionParentsSorted(mainRegion['id'])
         regionOrMainRegion = mainRegion
         if region != None:
             dativeRegionName = region['dativeCaseName']
             parentIds=[region['id']]
-            parentRegions = db.getRegionParents(region['id'])
+            parentRegions = db.getRegionParentsSorted(region['id'])
             regionOrMainRegion = region
         return render_template('selectRegionForService.html',
             siteName = db.getText("header", "siteName"),
@@ -179,7 +183,7 @@ def RegionService(routeString, subdomain):
                 copyright = db.getText("footer", "copyright"),
                 services = db.getServices(),
                 region = region,
-                parentRegions = db.getRegionParents(region['id']),
+                parentRegions = db.getRegionParentsSorted(region['id']),
                 regions = db.getRegionsTree()
                 )
         if len(serviceAndRegion) > 1:
@@ -187,7 +191,7 @@ def RegionService(routeString, subdomain):
             if region == None:
                 abort(404)
             services = db.getServices()[:]
-            services.remove(db.getServiceById(1))
+            services.remove(service)
             return render_template('orderService.html',
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto"),
@@ -202,8 +206,8 @@ def RegionService(routeString, subdomain):
                 services = services,
                 region = region,
                 service = service,
-                parentRegions = db.getRegionParents(region['id']),
-                regions = db.getRegionsTree(),
+                parentRegions = db.getRegionParentsSorted(region['id']),
+                regions = db.getRegionsTree(parentIds = [mainRegion['id']], depth = 2),
                 otherServicesHeader = "Другие услуги в {}".format(region['dativeCaseName']),
                 contentBlocks = db.getText("orderService", str(service['id']))
                 )

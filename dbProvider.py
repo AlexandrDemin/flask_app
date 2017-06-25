@@ -1,8 +1,9 @@
 import json
 import random
+from operator import itemgetter
 
 absolutePath = '/home/noidea91/flask_app/'
-#absolutePath = ''
+# absolutePath = ''
 
 # Texts
 
@@ -114,6 +115,13 @@ def getRegionParents(regionId):
 			return result
 		result.append(parent)
 		region = parent
+
+def getRegionParentsSorted(regionId, deleteFirst = True):
+	parentsUnsorted = getRegionParents(regionId)
+	parents = sorted(parentsUnsorted, key=itemgetter('id'))
+	if len(parents) > 0 and deleteFirst:
+		parents.pop(0)
+	return parents
 
 def getRegionsByLevel(levels):
 	result = []

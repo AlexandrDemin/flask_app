@@ -3,6 +3,7 @@
     <head>
         {% block head %}
             <meta charset="utf-8">
+            <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}"> -->
             <link rel="stylesheet" href="/static/css/app.css">
             <title>{{title}}</title>
             <meta name="description" content="{{description}}">
@@ -14,7 +15,7 @@
         <header class="top-bar">
             <div class="row">
                 <div class="top-bar-left">
-                    <a href="{{url_for("MainPage")}}">
+                    <a href="{{url_for("RegionNoService", subdomain = "www")}}">
                         <h4 class="top-bar-logo"><strong>{{siteName}}</strong></h4>
                         <small class="top-bar-motto">
                             {{motto|safe}}
@@ -32,15 +33,7 @@
             </div>
         </header>
         <div class="main-content">
-            <div class="row show-for-small-only">
-                <h4>
-                    {{mainPhone|safe}}
-                </h4>
-                <p>
-                    {{mainPhoneMeta}}
-                </p>
-                <a class="show-for-small-only button" href="tel:{{mainPhoneLink}}">Позвонить</a>
-            </div>
+            <a class="show-for-small-only call-mobile expanded button large" href="tel:{{mainPhoneLink}}">Позвонить {{mainPhone|safe}}</a>
             {% block content %}{% endblock %}
         </div>
         <footer class="expanded row">
@@ -49,5 +42,7 @@
                     <div class="small-12 columns">{{copyright|safe}}</div>
                 </div>
         </footer>
+        {% block js %}
+        {% endblock %}
     </body>
 </html>

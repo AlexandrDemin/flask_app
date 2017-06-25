@@ -1,22 +1,6 @@
 [
 	{
-		"subdomain": "msk",
-		"regionId": 1
-	},
-	{
-		"subdomain": "spb",
-		"regionId": 5
-	},
-	{
-		"subdomain": "krasnodar",
-		"regionId": 8
-	},
-	{
-		"subdomain": "tula",
-		"regionId": 10
-	},
-	{
-		"subdomain": "kostroma",
-		"regionId": 12
+		"subdomain": "www",
+		"regionId": 0
 	}
 ]

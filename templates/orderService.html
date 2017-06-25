@@ -2,27 +2,31 @@
 {% block content %}
 	<div class="background-header row">
 		<div class="breadcrumbs">
-			<a href="{{url_for("MainPage")}}">Главная</a>&nbsp;/
+			<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
 			<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
 			{% for region in parentRegions %}
 				<a href="{{getLinkForRegionService(serviceId=service.id, regionId=region.id)}}">{{region.name}}</a>&nbsp;/
 			{% endfor %}
 		</div>
 		<h1>{{h1}}</h1>
+		<div class="row">
+			<div class="medium-6 columns orderServiceContent">
+				<div class="big-phone-container">
+					<h2 class="big-phone"><strong>{{mainPhone|safe}}</strong></h2>
+					<a class="show-for-small-only button" href="tel:{{mainPhoneLink}}">Позвонить</a>
+				</div>
+			</div>
+			<div class="medium-6 columns map" id="map">
+				Загрузка карты&hellip;
+			</div>
+		</div>
 	</div>
 	<div class="row">
-		<div class="medium-6 columns orderServiceContent">
-			<div class="big-phone-container">
-				<h2 class="big-phone"><strong>{{mainPhone|safe}}</strong></h2>
-				<a class="show-for-small-only button" href="tel:{{mainPhoneLink}}">Позвонить</a>
+		{% for contentBlock in contentBlocks %}
+			<div class="medium-6 columns">
+				{{contentBlock|safe}}
 			</div>
-			{% for contentBlock in contentBlocks %}
-				{{contentBlocks[contentBlock]|safe}}
-			{% endfor %}
-		</div>
-		<div class="medium-6 columns map">
-			Здесь будет карта
-		</div>
+		{% endfor %}
 	</div>
 	<hr>
 	<div class="row text-center">
@@ -34,9 +38,7 @@
 				<div class="card service {{service.nameTranslit}}">
 					<h2>{{service.name}}</h2>
 					<p>{{service.description}}</p>
-					<p>
-						<a class="button" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.id) }}">Подробнее</a>
-					</p>
+					<a class="button" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.id) }}">Подробнее</a>
 				</div>
 			</div>
 		{% endfor %}
@@ -60,4 +62,33 @@
 			</div>
 		{% endfor %}
 	</div>
+{% endblock %}
+{% block js %}
+	<script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: {{region.lat}}, lng: {{region.lon}}},
+          zoom: 10,
+          scrollwheel: false
+        });
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode(
+        	{
+				'address': "{{region.nameTranslit}}",
+				'bounds': new google.maps.LatLngBounds({lat: {{region.lat}}, lng: {{region.lon}}}, {lat: {{region.lat + 1}}, lng: {{region.lon + 1}}})
+			}, 
+			function(results, status) {
+				if (status === 'OK') {
+					map.setCenter(results[0].geometry.location);
+					var marker = new google.maps.Marker({
+						map: map,
+						position: results[0].geometry.location
+					});
+				}
+			});
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvkIVKmq0vlm7bSLYaIxgF028eIJqhX8U&callback=initMap"
+    async defer></script>
 {% endblock %}

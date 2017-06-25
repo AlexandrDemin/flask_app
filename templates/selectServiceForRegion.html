@@ -2,7 +2,7 @@
 {% block content %}
 	<div class="background-header row">
 		<div class="breadcrumbs">
-			<a href="{{url_for("MainPage")}}">Главная</a>&nbsp;/
+			<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
 			{% if parentRegions != None %}
 				{% for region in parentRegions %}
 					<a href="{{getLinkForRegionService(regionId=region.id)}}">{{region.name}}</a>&nbsp;/
@@ -18,9 +18,7 @@
 				<div class="card service {{service.nameTranslit}}">
 					<h2>{{service.name}}</h2>
 					<p>{{service.description}}</p>
-					<p>
-						<a class="button" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None) }}">Подробнее</a>
-					</p>
+					<a class="button" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.childrenIds[0], order = True) if region !=None and region.hasChildren and getLen(region.childrenIds) == 1 else getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None) }}">Подробнее</a>
 				</div>
 			</div>
 		{% endfor %}

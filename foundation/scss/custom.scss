@@ -5,6 +5,7 @@ $header-height: rem-calc(80px);
 	box-shadow: $global-shadow;
 	width: 100%;
 	height: $header-height;
+	z-index: 1;
 }
 
 .top-bar-logo {
@@ -34,7 +35,7 @@ $header-height: rem-calc(80px);
 }
 
 .call-us-bottom {
-	padding: 0.5rem 0;
+	padding: $global-padding 0;
 	font-size: rem-calc(20);
 }
 
@@ -58,6 +59,10 @@ footer {
 	a {
 		color: $white;
 	}
+	.big-phone {
+		text-shadow: 0px 4px 10px rgba($black, 0.4);
+		color: $white;
+	}
 }
 
 .background-header-big {
@@ -71,5 +76,27 @@ footer {
 	padding: $global-padding;
 	h2 {
 		font-size: rem-calc(25px);
+	}
+}
+
+.call-mobile {
+	position: fixed;
+	bottom: 0;
+	display: block;
+	margin-bottom: 0;
+	z-index: 1;
+}
+
+.map {
+	height: 20rem;
+	border-radius: $global-radius;
+	background-color: $medium-gray;
+	box-shadow: $global-shadow;
+	overflow: hidden;
+}
+
+@media (max-width:640px) {
+	footer {
+		padding-bottom: $global-padding*2;
 	}
 }
