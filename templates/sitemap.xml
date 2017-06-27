@@ -20,10 +20,12 @@
 		        <loc>{{urlRoot + getLinkForRegionService(serviceId=service.id, regionId=region)}}</loc>
 		        <lastmod>{{lastMod}}</lastmod>
 		    </url>
-		    <url>
-		        <loc>{{urlRoot + getLinkForRegionService(serviceId=service.id, regionId=region, order = True)}}</loc>
-		        <lastmod>{{lastMod}}</lastmod>
-		    </url>
+		    {% if getLinkForRegionService(serviceId=service.id, regionId=region) != getLinkForRegionService(serviceId=service.id, regionId=region, order = True) %}
+    		    <url>
+    		        <loc>{{urlRoot + getLinkForRegionService(serviceId=service.id, regionId=region, order = True)}}</loc>
+    		        <lastmod>{{lastMod}}</lastmod>
+    		    </url>
+		    {% endif %}
 		{% endfor %}
 	{% endfor %}
 </urlset>
