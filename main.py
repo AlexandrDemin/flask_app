@@ -1,11 +1,13 @@
 import dbProvider as db
 from operator import itemgetter
-from flask import Flask, url_for, render_template, abort
+from flask import Flask, url_for, render_template, abort, make_response
 
 app = Flask(__name__)
 
-# app.config['SERVER_NAME'] = 'govnosos.pro:5000'
-app.config['SERVER_NAME'] = 'govnosos.pro'
+# serverName = 'govnosos.pro:5000'
+serverName = 'govnosos.pro'
+
+app.config['SERVER_NAME'] = serverName
 
 # Helpers
 
@@ -211,6 +213,33 @@ def RegionService(routeString, subdomain):
                 otherServicesHeader = "Другие услуги в {}".format(region['dativeCaseName']),
                 contentBlocks = db.getText("orderService", str(service['id']))
                 )
+
+#robots.txt
+@app.route('/robots.txt', subdomain="<subdomain>")
+def Robots(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    robots = 'User-agent: *\nAllow: /'
+    response= make_response(robots)
+    response.headers["Content-Type"] = "text/plain"
+    return response
+
+#sitemap.xml
+@app.route('/sitemap.xml', subdomain="<subdomain>")
+def Sitemap(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    services = db.getServices()
+    regions = db.getAllChildrenRegionIds(mainRegion['id'])
+    sitemapXml = render_template('sitemap.xml',
+        urlRoot='http://' + subdomain + '.' + serverName,
+        services = services,
+        regions = regions)
+    response= make_response(sitemapXml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
 
 # Error handling
 
