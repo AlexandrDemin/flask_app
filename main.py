@@ -226,17 +226,51 @@ def Robots(subdomain):
     return response
 
 #sitemap.xml
+
+sitemapCount = 50
+lastMod = '2017-06-27'
+
 @app.route('/sitemap.xml', subdomain="<subdomain>")
-def Sitemap(subdomain):
+def SitemapIndex(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         abort(404)
+    sitemapIndex = render_template('sitemapindex.xml',
+        urlRoot='http://' + subdomain + '.' + serverName,
+        sitemapCount = sitemapCount,
+        lastMod = lastMod)
+    response= make_response(sitemapIndex)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
+@app.route('/sitemap<index>.xml', subdomain="<subdomain>")
+def Sitemap(index, subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    index = int(index)
+    if index > sitemapCount:
+        abort(404)
     services = db.getServices()
     regions = db.getAllChildrenRegionIds(mainRegion['id'])
-    sitemapXml = render_template('sitemap.xml',
+    start = (index - 1) * len(regions)/sitemapCount
+    if start < 0:
+        abort(404)
+    if start > len(regions):
+        start = len(regions)
+    end = index * len(regions)/sitemapCount
+    if end > len(regions):
+        end = len(regions)
+    start = int(start)
+    end = int(end)
+    sitemapTemplate = 'sitemap1.xml'
+    if index == 1:
+        sitemapTemplate = 'sitemap.xml'
+    sitemapXml = render_template(sitemapTemplate,
         urlRoot='http://' + subdomain + '.' + serverName,
         services = services,
-        regions = regions)
+        regions = regions[start:end],
+        lastMod = lastMod)
     response= make_response(sitemapXml)
     response.headers["Content-Type"] = "application/xml"
     return response
