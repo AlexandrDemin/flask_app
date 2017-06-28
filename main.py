@@ -1,4 +1,5 @@
 import dbProvider as db
+import json
 from operator import itemgetter
 from flask import Flask, url_for, render_template, abort, make_response
 
@@ -67,6 +68,14 @@ def getRegionByPathAndParentId(path, parentId):
             return None
         parentId = region['id']
     return region
+
+def replaceRegions(content, region):
+    result = []
+    for block in content:
+        replaced = block.replace('{N}', region['dativeCaseName'])
+        result.append(replaced)
+    return result
+
 '''
 # No subdomain
 
@@ -163,7 +172,7 @@ def RegionService(routeString, subdomain):
             service = service,
             parentRegions = parentRegions,
             copyright = db.getText("footer", "copyright"),
-            regions = db.getRegionsTree(parentIds=parentIds),
+            regions = db.getRegionsTree(parentIds, 2),
             region = regionOrMainRegion
             )
     else:
@@ -194,6 +203,8 @@ def RegionService(routeString, subdomain):
                 abort(404)
             services = db.getServices()[:]
             services.remove(service)
+            content = db.getRandomizedTexts("orderService", str(service['id']), randomSeed = region['id'])
+            content = replaceRegions(content, region)
             return render_template('orderService.html',
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto"),
@@ -211,7 +222,7 @@ def RegionService(routeString, subdomain):
                 parentRegions = db.getRegionParentsSorted(region['id']),
                 regions = db.getRegionsTree(parentIds = [mainRegion['id']], depth = 2),
                 otherServicesHeader = "Другие услуги в {}".format(region['dativeCaseName']),
-                contentBlocks = db.getText("orderService", str(service['id']))
+                contentBlocks = content
                 )
 
 #robots.txt

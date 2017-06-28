@@ -5,6 +5,21 @@ from operator import itemgetter
 absolutePath = '/home/noidea91/flask_app/'
 # absolutePath = ''
 
+def randomize(inArray, randomSeed = None, count = None):
+	tempList = inArray[:]
+	result = []
+	if count == None:
+		count = len(tempList) + 1
+	for i in range(1, count):
+		if randomSeed == None:
+			random.seed()
+		else:
+			random.seed(randomSeed)
+		rnd = random.randrange(len(tempList))
+		result.append(tempList[rnd])
+		tempList.pop(rnd)
+	return result
+
 # Texts
 
 def getTextsCache():
@@ -19,6 +34,10 @@ def getText(action, stringName=""):
 		return _textsCache[action]
 	else:
 		return _textsCache[action].get(stringName)
+
+def getRandomizedTexts(action, stringName="", randomSeed = None):
+	texts = getText(action, stringName)
+	return randomize(texts, randomSeed = randomSeed)
 
 def getServicesCache():
 	json_data = open(absolutePath + "configs/services.json").read()
@@ -97,13 +116,15 @@ def getRegionIdsByParentIds(parentIds):
 		result.extend(region['childrenIds'])
 	return result
 
-def getRegionsByParentIds(parentIds):
+def getRegionsByParentIds(parentIds, includeParents = False):
 	result = []
 	for regionId in parentIds:
 		region = getRegionById(regionId)
 		for childId in region['childrenIds']:
 			child = getRegionById(childId)
-			result.append(getRegionById(child['id']))
+			result.append(child)
+		if includeParents:
+			result.append(region)
 	return result
 
 def getRegionParents(regionId):
@@ -130,16 +151,24 @@ def getRegionsByLevel(levels):
 			result.append(region)
 	return result
 
-def getRegionsTree(parentIds=None, depth=1):
+def getRegionsTree(parentIds=None, depth=2):
 	result = []
-	regions = getRegionsByLevel([1]) if parentIds == None else getRegionsByParentIds(parentIds);
+	if parentIds == None:
+		regions = getRegionsByLevel([1])
+	else:
+		regions = []
+		for pid in parentIds:
+			regions.append(getRegionById(pid))
 	if depth > 0:
 		for region in regions:
 			regionId = region['id']
-			if depth > 1:
-				region['children'] = getRegionsTree(parentIds = [regionId], depth = depth - 1)
-			else:
-				region['children'] = getRegionsByParentIds([regionId])
+			children = getRegionsByParentIds([regionId])
+			region['hasChildren'] = False
+			if len(children) > 0:
+				region['hasChildren'] = True
+			if depth > 1 and region['hasChildren']:
+				children = getRegionsTree(parentIds = region['childrenIds'], depth = depth - 1)
+			region['children'] = children
 			result.append(region)
 	return result
 
@@ -204,11 +233,4 @@ def getCarsCache():
 _carsCache = getCarsCache()
 
 def getRandomCars(count):
-	tempCars = _carsCache[:]
-	result = []
-	for i in range(1, count):
-		random.seed()
-		rnd = random.randrange(len(tempCars))
-		result.append(tempCars[rnd])
-		tempCars.pop(rnd)
-	return result
+	return randomize(_carsCache, count)

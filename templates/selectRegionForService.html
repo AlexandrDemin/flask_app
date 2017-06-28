@@ -19,18 +19,25 @@
 		{% include 'regionSearch.html' %}
 	</div>
 	<div class="row">
-		{% for region in regions %}
+		<div class="medium-6 large-4 columns">
+			<a href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id, order=True)}}">{{region.name}}</a>
+		</div>
+		{% for subregion in region['children'] %}
 			<div class="medium-6 large-4 columns">
-				<strong>
-					<a href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id, order=True)}}">{{region.name}}</a>
-				</strong>
-				<ul class="no-bullet">
-				{% for subregion in region['children'] %}
-					<li>
-						<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id)}}">{{subregion.name}}</a>
-					</li>
-				{% endfor %}
-				</ul>
+				{% if subregion.hasChildren %}
+					<strong>
+						<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id, order=True)}}">{{subregion.name}}</a>
+					</strong>
+					<ul class="no-bullet">
+					{% for subsubregion in subregion['children'] %}
+						<li>
+							<a href="{{getLinkForRegionService(regionId=subsubregion.id, serviceId=service.id)}}">{{subsubregion.name}}</a>
+						</li>
+					{% endfor %}
+					</ul>
+				{% else %}
+					<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id, order=True)}}">{{subregion.name}}</a>
+				{% endif %}
 			</div>
 		{% endfor %}
 	</div>
