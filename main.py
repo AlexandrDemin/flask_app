@@ -199,7 +199,7 @@ def Robots(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         abort(404)
-    robots = 'User-agent: *\nDisallow: /'
+    robots = 'User-agent: *\nAllow: /'
     response= make_response(robots)
     response.headers["Content-Type"] = "text/plain"
     return response
