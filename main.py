@@ -76,60 +76,23 @@ def replaceRegions(content, region):
         result.append(replaced)
     return result
 
-'''
-@app.route('/<path>')
-def Redirect(path):
-    return redirect("http://www.otkachkaseptika.ru/" + path, code=302)
+# Redirects from no subdomains to www
 
+@app.route('/')
+def Redirect():
+    return redirect("http://www." + serverName + "/", code=301)
 
-# No subdomain
+@app.route('/<path:routeString>')
+def RedirectWithPath(routeString):
+    return redirect("http://www." + serverName + "/" + routeString, code=301)
 
-@app.route('/', subdomain='www')
-def MainPage():
-    return render_template('mainPage.html',
-        siteName = db.getText("header", "siteName"),
-        motto = db.getText("header", "motto"),
-        mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = db.getText("phoneDescription", "8800"),
-        title = db.getText("mainPage", "title"),
-        description = db.getText("mainPage", "description"),
-        keywords = db.getText("mainPage", "keywords"),
-        h1 = db.getText("mainPage", "h1"),
-        copyright = db.getText("footer", "copyright"),
-        services = db.getServices(),
-        regions = db.getRegionsTree(),
-        region = None
-        )
-
-@app.route('/<service>', subdomain='www')
-def ServiceNoRegion(service):
-    service = db.getServiceByNameTranslit(service)
-    if service == None:
-        abort(404)
-    return render_template('selectRegionForService.html',
-        siteName = db.getText("header", "siteName"),
-        motto = db.getText("header", "motto"),
-        mainPhone = db.getDefaultPhone()['phoneString'],
-        mainPhoneMeta = db.getText("phoneDescription", "8800"),
-        title = service['name'],
-        description = service['name'],
-        keywords = service['name'],
-        h1 = service['name'],
-        service = service,
-        parentRegions = None,
-        copyright = db.getText("footer", "copyright"),
-        regions = db.getRegionsTree(),
-        region = None
-        )
-'''
 # With subdomain
-# TODO сделать на www москву
 
 @app.route('/', subdomain="<subdomain>")
 def RegionNoService(subdomain):
     region = db.getRegionBySubdomain(subdomain)
     if region == None:
-        abort(404)
+        return abort(404)
     return render_template('selectServiceForRegion.html',
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto"),
@@ -150,7 +113,7 @@ def RegionNoService(subdomain):
 def RegionService(routeString, subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        return abort(404)
     serviceAndRegion = routeString.split("/")
     service = db.getServiceByNameTranslit(serviceAndRegion[0])
     if service != None:

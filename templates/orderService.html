@@ -47,26 +47,26 @@
 {% endblock %}
 {% block footerContent %}
 	<div class="row">
-	{% for subregion in regions %}
-		{% for subregion in subregion['children'] %}
-			<div class="medium-6 large-4 columns">
-				{% if subregion.hasChildren %}
-					<strong>
+		{% for subregion in regions %}
+			{% for subregion in subregion['children'] %}
+				<div class="medium-6 large-4 columns">
+					{% if subregion.hasChildren %}
+						<strong>
+							<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=None)}}">{{subregion.name}}</a>
+						</strong>
+						<ul class="no-bullet">
+						{% for subsubregion in subregion['children'] %}
+							<li>
+								<a href="{{getLinkForRegionService(regionId=subsubregion.id, serviceId=None)}}">{{subsubregion.name}}</a>
+							</li>
+						{% endfor %}
+						</ul>
+					{% else %}
 						<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=None)}}">{{subregion.name}}</a>
-					</strong>
-					<ul class="no-bullet">
-					{% for subsubregion in subregion['children'] %}
-						<li>
-							<a href="{{getLinkForRegionService(regionId=subsubregion.id, serviceId=None)}}">{{subsubregion.name}}</a>
-						</li>
-					{% endfor %}
-					</ul>
-				{% else %}
-					<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=None)}}">{{subregion.name}}</a>
-				{% endif %}
-			</div>
+					{% endif %}
+				</div>
+			{% endfor %}
 		{% endfor %}
-	{% endfor %}
 	</div>
 {% endblock %}
 {% block js %}
