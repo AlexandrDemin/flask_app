@@ -1,7 +1,7 @@
 import dbProvider as db
 import json
 from operator import itemgetter
-from flask import Flask, url_for, render_template, abort, make_response
+from flask import Flask, url_for, render_template, abort, make_response, redirect
 
 app = Flask(__name__)
 
@@ -77,6 +77,11 @@ def replaceRegions(content, region):
     return result
 
 '''
+@app.route('/<path>')
+def Redirect(path):
+    return redirect("http://www.otkachkaseptika.ru/" + path, code=302)
+
+
 # No subdomain
 
 @app.route('/', subdomain='www')
