@@ -199,7 +199,7 @@ def Robots(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         abort(404)
-    robots = 'User-agent: *\nAllow: /'
+    robots = 'User-agent: *\nAllow: /\nHost: www.otkachkaseptika.ru\nsitemap: http://www.otkachkaseptika.ru/sitemap.xml'
     response= make_response(robots)
     response.headers["Content-Type"] = "text/plain"
     return response
