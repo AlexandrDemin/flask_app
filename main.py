@@ -6,7 +6,7 @@ from flask import Flask, url_for, render_template, abort, make_response
 app = Flask(__name__)
 
 # serverName = 'govnosos.pro:5000'
-serverName = 'govnosos.pro'
+serverName = 'otkachkaseptika.ru'
 
 app.config['SERVER_NAME'] = serverName
 
@@ -231,7 +231,7 @@ def Robots(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         abort(404)
-    robots = 'User-agent: *\nAllow: /'
+    robots = 'User-agent: *\nDisallow: /'
     response= make_response(robots)
     response.headers["Content-Type"] = "text/plain"
     return response
