@@ -254,6 +254,16 @@ def Sitemap(index, subdomain):
     response.headers["Content-Type"] = "application/xml"
     return response
 
+#verification
+
+@app.route('/google450d69197dedc081.html', subdomain="<subdomain>")
+def GoogleVerification(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    return 'google-site-verification: google450d69197dedc081.html'
+
+
 # Error handling
 
 @app.errorhandler(404)
