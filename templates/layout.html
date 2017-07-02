@@ -3,10 +3,10 @@
     <head>
         {% block head %}
             <meta charset="utf-8">
-            <link rel="shortcut icon" href="/static/img/favicon.ico"/>
-            <link rel="stylesheet" href="/static/css/app.css">
-            <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/> -->
-            <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}"> -->
+            <!-- <link rel="shortcut icon" href="/static/img/favicon.ico"/> -->
+            <!-- <link rel="stylesheet" href="/static/css/app.css"> -->
+            <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
             <title>{{title}}</title>
             <meta name="description" content="{{description}}">
             <meta name="keywords" content="{{keywords}}">

@@ -2,8 +2,8 @@ import json
 import random
 from operator import itemgetter
 
-absolutePath = '/home/noidea91/flask_app/'
-# absolutePath = ''
+# absolutePath = '/home/noidea91/flask_app/'
+absolutePath = ''
 
 def randomize(inArray, randomSeed = None, count = None):
 	tempList = inArray[:]
@@ -39,12 +39,12 @@ def getRandomizedTexts(action, stringName="", randomSeed = None):
 	texts = getText(action, stringName)
 	return randomize(texts, randomSeed = randomSeed)
 
+# Services
+
 def getServicesCache():
 	json_data = open(absolutePath + "configs/services.json").read()
 	texts = json.loads(json_data)
 	return texts
-
-# Services
 
 _servicesCache = getServicesCache()
 
@@ -63,6 +63,15 @@ def getServiceById(serviceId):
 			return service
 	return None
 
+def getServiceRandomImgNumber(service, randomSeed):
+	maxImgCount = service['imagesCount']
+	if maxImgCount == 0:
+		return None
+	random.seed(randomSeed)
+	rnd = random.randrange(1, maxImgCount)
+	return rnd
+
+
 # Regions
 
 def getRegionsCache():
@@ -71,7 +80,7 @@ def getRegionsCache():
 	for region in regions:
 		region['childrenIds'] = []
 		for potentialChild in regions:
-			if region['id'] == potentialChild['parentId']:
+			if region['id'] == potentialChild['parentId'] and region['name'] != potentialChild['name']:
 				region['childrenIds'].append(potentialChild['id'])
 		region['hasChildren'] = False if len(region['childrenIds']) == 0 else True
 	return regions
@@ -168,8 +177,10 @@ def getRegionsTree(parentIds=None, depth=2):
 				region['hasChildren'] = True
 			if depth > 1 and region['hasChildren']:
 				children = getRegionsTree(parentIds = region['childrenIds'], depth = depth - 1)
-			region['children'] = children
+			sortedChildren = sorted(children, key=itemgetter('name'))
+			region['children'] = sortedChildren
 			result.append(region)
+	sortedResult = sorted(result, key=itemgetter('name'))
 	return result
 
 def getRegionById(id):

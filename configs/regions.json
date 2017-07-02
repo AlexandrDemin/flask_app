@@ -1224,18 +1224,6 @@
         "level": 4
     },
     {
-        "id": 102,
-        "name": "Домодедово",
-        "dativeCaseName": "Домодедово",
-        "administrativeTypeString": "",
-        "nameTranslit": "domodedovo",
-        "dativeTranslit": "domodedovo",
-        "parentId": 14,
-        "lat": 55.437112,
-        "lon": 37.768049,
-        "level": 4
-    },
-    {
         "id": 103,
         "name": "Хотьково",
         "dativeCaseName": "Хотьково",
@@ -1570,18 +1558,6 @@
         "lat": 54.919828,
         "lon": 37.417383,
         "level": 3
-    },
-    {
-        "id": 131,
-        "name": "Балашиха",
-        "dativeCaseName": "Балашихе",
-        "administrativeTypeString": "",
-        "nameTranslit": "balashiha",
-        "dativeTranslit": "balashihe",
-        "parentId": 80,
-        "lat": 55.796339,
-        "lon": 37.938199,
-        "level": 4
     },
     {
         "id": 132,
@@ -2004,18 +1980,6 @@
         "level": 5
     },
     {
-        "id": 167,
-        "name": "Бронницы",
-        "dativeCaseName": "Бронницах",
-        "administrativeTypeString": "",
-        "nameTranslit": "bronnitsy",
-        "dativeTranslit": "bronnitsah",
-        "parentId": 133,
-        "lat": 55.425470999999995,
-        "lon": 38.264108,
-        "level": 4
-    },
-    {
         "id": 168,
         "name": "п. Тучково",
         "dativeCaseName": "п. Тучково",
@@ -2170,18 +2134,6 @@
         "lat": 55.149851,
         "lon": 37.466997,
         "level": 5
-    },
-    {
-        "id": 182,
-        "name": "Истра",
-        "dativeCaseName": "Истре",
-        "administrativeTypeString": "",
-        "nameTranslit": "istra",
-        "dativeTranslit": "istre",
-        "parentId": 4,
-        "lat": 55.914287,
-        "lon": 36.860284,
-        "level": 4
     },
     {
         "id": 183,
@@ -2385,18 +2337,6 @@
         "parentId": 7,
         "lat": 55.115213,
         "lon": 37.837192,
-        "level": 4
-    },
-    {
-        "id": 200,
-        "name": "Звенигород",
-        "dativeCaseName": "Звенигороде",
-        "administrativeTypeString": "",
-        "nameTranslit": "zvenigorod",
-        "dativeTranslit": "zvenigorode",
-        "parentId": 119,
-        "lat": 55.729686,
-        "lon": 36.855325,
         "level": 4
     },
     {
@@ -2964,18 +2904,6 @@
         "level": 4
     },
     {
-        "id": 248,
-        "name": "Жуковский",
-        "dativeCaseName": "Жуковском",
-        "administrativeTypeString": "",
-        "nameTranslit": "zhukovskiy",
-        "dativeTranslit": "zhukovskom",
-        "parentId": 152,
-        "lat": 55.59778000000001,
-        "lon": 38.119496999999996,
-        "level": 4
-    },
-    {
         "id": 249,
         "name": "п. Верея",
         "dativeCaseName": "п. Верея",
@@ -3216,30 +3144,6 @@
         "level": 4
     },
     {
-        "id": 269,
-        "name": "Егорьевск",
-        "dativeCaseName": "Егорьевске",
-        "administrativeTypeString": "",
-        "nameTranslit": "egorevsk",
-        "dativeTranslit": "egorevske",
-        "parentId": 17,
-        "lat": 55.38305,
-        "lon": 39.035833000000004,
-        "level": 4
-    },
-    {
-        "id": 270,
-        "name": "Долгопрудный",
-        "dativeCaseName": "Долгопрудном",
-        "administrativeTypeString": "",
-        "nameTranslit": "dolgoprudnyy",
-        "dativeTranslit": "dolgoprudnom",
-        "parentId": 161,
-        "lat": 55.93362,
-        "lon": 37.514401,
-        "level": 4
-    },
-    {
         "id": 271,
         "name": "д. Ямуга",
         "dativeCaseName": "д. Ямуга",
@@ -3249,18 +3153,6 @@
         "parentId": 12,
         "lat": 56.389846999999996,
         "lon": 36.664415000000005,
-        "level": 4
-    },
-    {
-        "id": 272,
-        "name": "Люберцы",
-        "dativeCaseName": "Люберцах",
-        "administrativeTypeString": "",
-        "nameTranslit": "lyubertsy",
-        "dativeTranslit": "lyubertsah",
-        "parentId": 65,
-        "lat": 55.67649399999999,
-        "lon": 37.898115999999995,
         "level": 4
     },
     {
@@ -4992,18 +4884,6 @@
         "level": 4
     },
     {
-        "id": 417,
-        "name": "Дубна",
-        "dativeCaseName": "Дубне",
-        "administrativeTypeString": "",
-        "nameTranslit": "dubna",
-        "dativeTranslit": "dubne",
-        "parentId": 138,
-        "lat": 56.744002,
-        "lon": 37.173176,
-        "level": 4
-    },
-    {
         "id": 418,
         "name": "д. Солнышково",
         "dativeCaseName": "д. Солнышково",
@@ -5037,18 +4917,6 @@
         "parentId": 20,
         "lat": 55.84201899999999,
         "lon": 38.567119,
-        "level": 4
-    },
-    {
-        "id": 421,
-        "name": "Ивантеевка",
-        "dativeCaseName": "Ивантеевке",
-        "administrativeTypeString": "",
-        "nameTranslit": "ivanteevka",
-        "dativeTranslit": "ivanteevke",
-        "parentId": 123,
-        "lat": 55.97,
-        "lon": 37.917574,
         "level": 4
     },
     {
@@ -17076,18 +16944,6 @@
         "level": 4
     },
     {
-        "id": 1425,
-        "name": "Зарайск",
-        "dativeCaseName": "Зарайске",
-        "administrativeTypeString": "",
-        "nameTranslit": "zaraysk",
-        "dativeTranslit": "zarayske",
-        "parentId": 53,
-        "lat": 54.756972999999995,
-        "lon": 38.874845,
-        "level": 4
-    },
-    {
         "id": 1426,
         "name": "д. Рыжево",
         "dativeCaseName": "д. Рыжево",
@@ -26146,18 +26002,6 @@
         "lat": 56.15189300000001,
         "lon": 37.493659,
         "level": 5
-    },
-    {
-        "id": 2185,
-        "name": "Дзержинский",
-        "dativeCaseName": "Дзержинском",
-        "administrativeTypeString": "",
-        "nameTranslit": "dzerzhinskiy",
-        "dativeTranslit": "dzerzhinskom",
-        "parentId": 157,
-        "lat": 55.630959999999995,
-        "lon": 37.849678999999995,
-        "level": 4
     },
     {
         "id": 2186,

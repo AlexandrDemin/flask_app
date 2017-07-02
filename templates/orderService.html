@@ -1,22 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="background-header row">
-		<div class="breadcrumbs">
-			<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
-			<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
-			{% for region in parentRegions %}
-				<a href="{{getLinkForRegionService(serviceId=service.id, regionId=region.id)}}">{{region.name}}</a>&nbsp;/
-			{% endfor %}
-		</div>
-		<h1>{{h1}}</h1>
+	<div class="background-header row expanded">
 		<div class="row">
-			<div class="medium-6 columns orderServiceContent">
+			<div class="breadcrumbs">
+				<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
+				<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
+				{% for region in parentRegions %}
+					<a href="{{getLinkForRegionService(serviceId=service.id, regionId=region.id)}}">{{region.name}}</a>&nbsp;/
+				{% endfor %}
+			</div>
+			<h1>{{h1|safe}}</h1>
+			<div class="orderServiceContent">
 				<div class="big-phone-container">
-					<h2 class="big-phone"><strong>{{mainPhone|safe}}</strong></h2>
+					<h1 class="big-phone"><strong>{{mainPhone|safe}}</strong></h1>
 					<a class="show-for-small-only button" href="tel:{{mainPhoneLink}}">Позвонить</a>
 				</div>
 			</div>
-			<div class="medium-6 columns map" id="map">
+			<div class="map" id="map">
 				Загрузка карты&hellip;
 			</div>
 		</div>
@@ -52,17 +52,17 @@
 				<div class="medium-6 large-4 columns">
 					{% if subregion.hasChildren %}
 						<strong>
-							<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=None)}}">{{subregion.name}}</a>
+							<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id)}}">{{subregion.name}}</a>
 						</strong>
 						<ul class="no-bullet">
 						{% for subsubregion in subregion['children'] %}
 							<li>
-								<a href="{{getLinkForRegionService(regionId=subsubregion.id, serviceId=None)}}">{{subsubregion.name}}</a>
+								<a href="{{getLinkForRegionService(regionId=subsubregion.id, serviceId=service.id)}}">{{subsubregion.name}}</a>
 							</li>
 						{% endfor %}
 						</ul>
 					{% else %}
-						<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=None)}}">{{subregion.name}}</a>
+						<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id)}}">{{subregion.name}}</a>
 					{% endif %}
 				</div>
 			{% endfor %}
@@ -75,28 +75,13 @@
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: {{region.lat}}, lng: {{region.lon}}},
-          zoom: 10,
+          zoom: 12,
           scrollwheel: false
         });
         var marker = new google.maps.Marker({
-						map: map,
-						position: {lat: {{region.lat}}, lng: {{region.lon}}}
-					});
-//         var geocoder = new google.maps.Geocoder();
-//         geocoder.geocode(
-//         	{
-// 				'address': "{{region.nameTranslit}}",
-// 				'bounds': new google.maps.LatLngBounds({lat: {{region.lat}}, lng: {{region.lon}}}, {lat: {{region.lat + 1}}, lng: {{region.lon + 1}}})
-// 			},
-// 			function(results, status) {
-// 				if (status === 'OK') {
-// 					map.setCenter(results[0].geometry.location);
-// 					var marker = new google.maps.Marker({
-// 						map: map,
-// 						position: results[0].geometry.location
-// 					});
-// 				}
-// 			});
+			map: map,
+			position: {lat: {{region.lat}}, lng: {{region.lon}}}
+		});
       }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvkIVKmq0vlm7bSLYaIxgF028eIJqhX8U&callback=initMap"

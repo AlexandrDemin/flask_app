@@ -5,8 +5,12 @@ from flask import Flask, url_for, render_template, abort, make_response, redirec
 
 app = Flask(__name__)
 
-# serverName = 'govnosos.pro:5000'
-serverName = 'otkachkaseptika.ru'
+serverName = 'govnosos.pro:5000'
+# serverName = 'otkachkaseptika.ru'
+
+def getStaticPath(relativePath):
+    # return '/static/' + relativePath
+    return url_for('static', filename=relativePath)
 
 app.config['SERVER_NAME'] = serverName
 
@@ -69,10 +73,18 @@ def getRegionByPathAndParentId(path, parentId):
         parentId = region['id']
     return region
 
-def replaceRegions(content, region):
+def getServiceImgUrl(service, region):
+    imgNumber = db.getServiceRandomImgNumber(service, region['id'])
+    if imgNumber == None:
+        service = db.getServiceById(5)
+        imgNumber = db.getServiceRandomImgNumber(service, region['id'])
+    return getStaticPath('img/' + service['nameTranslit'] + '/' + service['nameTranslit'] + '-' + str(imgNumber) + '.jpg')
+
+def replaceDataInContent(content, region, service):
     result = []
     for block in content:
-        replaced = block.replace('{N}', region['dativeCaseName'])
+        imgUrl = getServiceImgUrl(service, region)
+        replaced = block.replace('{N}', region['dativeCaseName']).replace('{imgSrc}', imgUrl).replace('{imgAlt}', service['name'] + ' в ' + region['dativeCaseName'])
         result.append(replaced)
     return result
 
@@ -95,7 +107,7 @@ def RegionNoService(subdomain):
         return abort(404)
     return render_template('selectServiceForRegion.html',
         siteName = db.getText("header", "siteName"),
-        motto = db.getText("header", "motto"),
+        motto = db.getText("header", "motto").format(region['dativeCaseName']),
         mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
         mainPhoneMeta = db.getText("phoneDescription", "other"),
         title = db.getText("regionNoService", "title").format(region['dativeCaseName']),
@@ -130,7 +142,7 @@ def RegionService(routeString, subdomain):
             regionOrMainRegion = region
         return render_template('selectRegionForService.html',
             siteName = db.getText("header", "siteName"),
-            motto = db.getText("header", "motto"),
+            motto = db.getText("header", "motto").format(mainRegion['dativeCaseName']),
             mainPhone = db.getPhoneByRegionId(mainRegion['id'])['phoneString'],
             mainPhoneMeta = db.getText("phoneDescription", "other"),
             title = db.getText("mainRegionService", "title").format(service['name'], dativeRegionName),
@@ -152,7 +164,7 @@ def RegionService(routeString, subdomain):
                 abort(404)
             return render_template('selectServiceForRegion.html',
                 siteName = db.getText("header", "siteName"),
-                motto = db.getText("header", "motto"),
+                motto = db.getText("header", "motto").format(mainRegion['dativeCaseName']),
                 mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
                 mainPhoneMeta = db.getText("phoneDescription", "other"),
                 title = db.getText("regionNoService", "title").format(region['dativeCaseName']),
@@ -172,10 +184,10 @@ def RegionService(routeString, subdomain):
             services = db.getServices()[:]
             services.remove(service)
             content = db.getRandomizedTexts("orderService", str(service['id']), randomSeed = region['id'])
-            content = replaceRegions(content, region)
+            content = replaceDataInContent(content, region, service)
             return render_template('orderService.html',
                 siteName = db.getText("header", "siteName"),
-                motto = db.getText("header", "motto"),
+                motto = db.getText("header", "motto").format(mainRegion['dativeCaseName']),
                 mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
                 mainPhoneLink = db.getPhoneByRegionId(region['id'])['phoneNormal'],
                 mainPhoneMeta = db.getText("phoneDescription", "other"),

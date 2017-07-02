@@ -1,80 +1,93 @@
 [
 	{
 		"id": 1,
-		"name": "Откачка септиков",
+		"name": "Откачка септика",
 		"nameTranslit": "otkachka-septika",
-		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях."
+		"description": "Откачка септиков в загородных домах, на стройках, в коммерческих предприятиях.",
+		"imagesCount": 8
 	},
 	{
 		"id": 2,
 		"name": "Откачка выгребных ям",
 		"nameTranslit": "otkachka-vygrebnykh-yam",
-		"description": "Откачка нечистот из выгребной ямы с помощью ассенизаторной машины."
+		"description": "Откачка нечистот из выгребной ямы с помощью ассенизаторной машины.",
+		"imagesCount": 6
 	},
 	{
 		"id": 3,
 		"name": "Откачка канализации",
 		"nameTranslit": "otkachka-kanalizacii",
-		"description": "Откачка воды из канализационных колодцев, дождевой (ливневой) канализации."
+		"description": "Откачка воды из канализационных колодцев, дождевой (ливневой) канализации.",
+		"imagesCount": 7
 	},
 	{
 		"id": 4,
 		"name": "Обслуживание биотуалетов",
 		"nameTranslit": "obslugivanie-biotualetov",
-		"description": "Очистка и заправка уличных биотуалетов."
+		"description": "Очистка и заправка уличных биотуалетов.",
+		"imagesCount": 8
 	},
 	{
 		"id": 5,
 		"name": "Аренда илососной машины",
 		"nameTranslit": "arenda-ilososnoj-machiny",
-		"description": "Очистка заиленных канализационных колодцев, осушка болот, откачка автомоек."
+		"description": "Очистка заиленных канализационных колодцев, осушка болот, откачка автомоек.",
+		"imagesCount": 8
 	},
 	{
 		"id": 6,
 		"name": "Вывоз жидких бытовых отходов (ЖБО)",
 		"nameTranslit": "vyvoz-gbo",
-		"description": "Откачка и утилизация любых жидких бытовых отходов."
+		"description": "Откачка и утилизация любых жидких бытовых отходов.",
+		"imagesCount": 8
 	},
 	{
 		"id": 7,
 		"name": "Откачка автомоек",
 		"nameTranslit": "otkachka-avtomoek",
-		"description": "Откачаем отстойник автомойки, не нарушая рабочего процесса."
+		"description": "Откачаем отстойник автомойки, не нарушая рабочего процесса.",
+		"imagesCount": 8
 	},
 	{
 		"id": 8,
 		"name": "Откачка жироуловителей",
 		"nameTranslit": "otkachka-girouloviteley",
-		"description": "Очистка промышленных жироуловителей."
+		"description": "Очистка промышленных жироуловителей.",
+		"imagesCount": 5
 	},
 	{
 		"id": 9,
 		"name": "Вывоз бурового шлама",
 		"nameTranslit": "vyvos-burovogo-shlama",
-		"description": "Откачка и вывоз бурового шлама и бентонита со стоек."
+		"description": "Откачка и вывоз бурового шлама и бентонита со стоек.",
+		"imagesCount": 6
 	},
 	{
 		"id": 10,
 		"name": "Откачка ила и песка",
 		"nameTranslit": "otkachka-ila-i-peska",
-		"description": "Откачка и вывоз ила и песка."
+		"description": "Откачка и вывоз ила и песка.",
+		"imagesCount": 6
 	},
 	{
 		"id": 11,
 		"name": "Откачка нефтепродуктов",
 		"nameTranslit": "otkachka-nefteproductov",
-		"description": "Откачка масла, мазута, нефти."
+		"description": "Откачка масла, мазута, нефти.",
+		"imagesCount": 7
 	},
 	{
 		"id": 12,
 		"name": "Откачка дачных туалетов",
 		"nameTranslit": "otkachka-dachnykh-tualetov",
-		"description": "Очистка дачных туалетов."
+		"description": "Очистка дачных туалетов.",
+		"imagesCount": 0
 	},
 	{
 		"id": 13,
 		"name": "Ассенизаторские услуги",
 		"nameTranslit": "assenizatorskie-uslugi",
-		"description": "Различные услуги ассенизаторской машины: откачка сточных и талых вод из канализации, из подвалов, из котлованов, фундаментов."
+		"description": "Различные услуги ассенизаторской машины: откачка сточных и талых вод из канализации, из подвалов, из котлованов, фундаментов.",
+		"imagesCount": 0
 	}
 ]

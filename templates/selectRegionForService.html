@@ -1,45 +1,60 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="background-header row">
-		<div class="breadcrumbs">
-			<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
-			{% if region != None %}
-				<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
-			{% endif %}
-			{% if parentRegions != None %}
-				{% for region in parentRegions %}
-					<a href="{{getLinkForRegionService(serviceId=service.id, regionId=region.id)}}">{{region.name}}</a>&nbsp;/
-				{% endfor %}
-			{% endif %}
-		</div>
-		<h1>{{h1|safe}}</h1>
-	</div>
-	<div class="row text-center">
-		<h2>Выберите регион из списка или воспользуйтесь поиском</h2>
-		{% include 'regionSearch.html' %}
-	</div>
-	<div class="row">
-		<div class="medium-6 large-4 columns">
-			<a href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id, order=True)}}">{{region.name}}</a>
-		</div>
-		{% for subregion in region['children'] %}
-			<div class="medium-6 large-4 columns">
-				{% if subregion.hasChildren %}
-					<strong>
-						<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id, order=True)}}">{{subregion.name}}</a>
-					</strong>
-					<ul class="no-bullet">
-					{% for subsubregion in subregion['children'] %}
-						<li>
-							<a href="{{getLinkForRegionService(regionId=subsubregion.id, serviceId=service.id)}}">{{subsubregion.name}}</a>
-						</li>
+	<div class="background-header row expanded">
+		<div class="row">
+			<div class="breadcrumbs">
+				<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
+				{% if region != None %}
+					<a href="{{getLinkForRegionService(serviceId=service.id)}}">{{service.name}}</a>&nbsp;/
+				{% endif %}
+				{% if parentRegions != None %}
+					{% for region in parentRegions %}
+						<a href="{{getLinkForRegionService(serviceId=service.id, regionId=region.id)}}">{{region.name}}</a>&nbsp;/
 					{% endfor %}
-					</ul>
-				{% else %}
-					<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id, order=True)}}">{{subregion.name}}</a>
 				{% endif %}
 			</div>
-		{% endfor %}
+			<h1>{{h1|safe}}</h1>
+		</div>
+	</div>
+	<div class="row text-center">
+		<h2>Выберите регион из списка</h2>
+		<!-- {% include 'regionSearch.html' %} -->
+	</div>
+	<div class="row">
+		{% if region.id > 0 %}
+			<div class="medium-6 large-4 columns">
+				<strong><a class="lvl-1-id-{{region.id}}" href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id, order=True)}}">{{region.name}}</a></strong>
+				{% if region.hasChildren %}
+					<ul class="no-bullet">
+						{% for subregion in region['children'] %}
+							{% if not subregion.hasChildren %}
+								<li>
+									<a class="lvl-2-id-{{subregion.id}}" href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id, order=True)}}">{{subregion.name}}</a>
+								</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</div>
+		{% endif %}
+		{% if region.hasChildren %}
+			{% for subregion in region['children'] %}
+				{% if subregion.hasChildren %}
+					<div class="medium-6 large-4 columns">
+							<strong>
+								<a class="lvl-2-id-{{subregion.id}}" href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id, order=True)}}">{{subregion.name}}</a>
+							</strong>
+							<ul class="no-bullet">
+							{% for subsubregion in subregion['children'] %}
+								<li>
+									<a class="lvl-3-id-{{subsubregion.id}}" href="{{getLinkForRegionService(regionId=subsubregion.id, serviceId=service.id)}}">{{subsubregion.name}}</a>
+								</li>
+							{% endfor %}
+							</ul>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
 	</div>
 	{% include 'callUsBottom.html' %}
 {% endblock %}
