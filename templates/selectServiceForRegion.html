@@ -20,7 +20,7 @@
 					<h2>{{service.name}}</h2>
 					<p>{{service.description}}</p>
 					<a class="button" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.childrenIds[0], order = True) if region !=None and region.hasChildren and getLen(region.childrenIds) == 1 else getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None) }}">
-						{% if region !=None and region.hasChildren and getLen(region.childrenIds) == 1 %}
+						{% if region !=None and ((region.hasChildren and getLen(region.childrenIds) == 1) or not region.hasChildren) %}
 							Подробнее
 						{% else %}
 							Уточнить регион
