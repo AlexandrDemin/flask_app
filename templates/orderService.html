@@ -78,21 +78,25 @@
           zoom: 10,
           scrollwheel: false
         });
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode(
-        	{
-				'address': "{{region.nameTranslit}}",
-				'bounds': new google.maps.LatLngBounds({lat: {{region.lat}}, lng: {{region.lon}}}, {lat: {{region.lat + 1}}, lng: {{region.lon + 1}}})
-			}, 
-			function(results, status) {
-				if (status === 'OK') {
-					map.setCenter(results[0].geometry.location);
-					var marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
 						map: map,
-						position: results[0].geometry.location
+						position: {lat: {{region.lat}}, lng: {{region.lon}}}
 					});
-				}
-			});
+//         var geocoder = new google.maps.Geocoder();
+//         geocoder.geocode(
+//         	{
+// 				'address': "{{region.nameTranslit}}",
+// 				'bounds': new google.maps.LatLngBounds({lat: {{region.lat}}, lng: {{region.lon}}}, {lat: {{region.lat + 1}}, lng: {{region.lon + 1}}})
+// 			},
+// 			function(results, status) {
+// 				if (status === 'OK') {
+// 					map.setCenter(results[0].geometry.location);
+// 					var marker = new google.maps.Marker({
+// 						map: map,
+// 						position: results[0].geometry.location
+// 					});
+// 				}
+// 			});
       }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvkIVKmq0vlm7bSLYaIxgF028eIJqhX8U&callback=initMap"
