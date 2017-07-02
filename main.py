@@ -5,12 +5,12 @@ from flask import Flask, url_for, render_template, abort, make_response, redirec
 
 app = Flask(__name__)
 
-serverName = 'govnosos.pro:5000'
-# serverName = 'otkachkaseptika.ru'
+# serverName = 'govnosos.pro:5000'
+serverName = 'otkachkaseptika.ru'
 
 def getStaticPath(relativePath):
-    # return '/static/' + relativePath
-    return url_for('static', filename=relativePath)
+    return '/static/' + relativePath
+    # return url_for('static', filename=relativePath)
 
 app.config['SERVER_NAME'] = serverName
 
