@@ -73,12 +73,15 @@ def getRegionByPathAndParentId(path, parentId):
         parentId = region['id']
     return region
 
-def getServiceImgUrl(service, region):
+def getServiceImgUrl(service, region, size = None):
     imgNumber = db.getServiceRandomImgNumber(service, region['id'])
     if imgNumber == None:
         service = db.getServiceById(5)
         imgNumber = db.getServiceRandomImgNumber(service, region['id'])
-    return getStaticPath('img/' + service['nameTranslit'] + '/' + service['nameTranslit'] + '-' + str(imgNumber) + '.jpg')
+    sizeStr = ''
+    if size != None:
+        sizeStr = '-' + size
+    return getStaticPath('img/' + service['nameTranslit'] + '/' + service['nameTranslit'] + '-' + str(imgNumber) + sizeStr + '.jpg')
 
 def replaceDataInContent(content, region, service):
     result = []
@@ -277,7 +280,6 @@ def GoogleVerification(subdomain):
     if mainRegion == None:
         abort(404)
     return 'google-site-verification: google450d69197dedc081.html'
-
 
 # Error handling
 

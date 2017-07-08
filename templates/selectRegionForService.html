@@ -2,7 +2,7 @@
 {% block content %}
 	<style type="text/css">
 		.header-{{service.nameTranslit}} {
-			background: linear-gradient(90deg, rgba(240,80,36,0.9), rgba(221,73,35,0.9)), url('{{getServiceImgUrl(service, region)}}') 50% 50% / cover no-repeat;
+			background: linear-gradient(90deg, rgba(240,80,36,0.9), rgba(221,73,35,0.9)), url('{{getServiceImgUrl(service, region, 'small')}}') 50% 50% / cover no-repeat;
 		}
 	</style>
 	<div class="background-header row expanded header-{{service.nameTranslit}}">

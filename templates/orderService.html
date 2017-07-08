@@ -2,7 +2,7 @@
 {% block content %}
 	<style type="text/css">
 		.header-{{service.nameTranslit}} {
-			background: linear-gradient(90deg, rgba(240,80,36,0.9), rgba(221,73,35,0.9)), url('{{getServiceImgUrl(service, region)}}') 50% 50% / cover no-repeat;
+			background: linear-gradient(90deg, rgba(240,80,36,0.9), rgba(221,73,35,0.9)), url('{{getServiceImgUrl(service, region, 'small')}}') 50% 50% / cover no-repeat;
 		}
 	</style>
 	<div class="background-header row expanded header-{{service.nameTranslit}}">
@@ -37,6 +37,7 @@
 	<div class="row text-center other-service-header">
 		<h2>{{otherServicesHeader}}</h2>
 	</div>
+	{% set forceOrder = True %}
 	{% include 'servicesList.html' %}
 	{% include 'callUsBottom.html' %}
 {% endblock %}
@@ -69,7 +70,7 @@
 		var callOrderServiceBtn = document.getElementsByClassName('call-order-service');
         callOrderServiceBtn[0].onclick = function() {
             yaCounter42155599.reachGoal('PHONE');
-            ga('send', 'event', 'Phone', 'Click'); 
+            ga('send', 'event', 'Phone', 'Click');
         }
       var map;
       function initMap() {

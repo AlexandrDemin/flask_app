@@ -14,6 +14,7 @@
         {% endblock head %}
     </head>
     <body>
+        {% set forceOrder = False %}
         {% include 'counters.html' %}
         <header class="top-bar">
             <div class="row">
@@ -49,7 +50,7 @@
             var callMobileBtn = document.getElementsByClassName('call-mobile');
             callMobileBtn[0].onclick = function() {
                 yaCounter42155599.reachGoal('PHONE');
-                ga('send', 'event', 'Phone', 'Click'); 
+                ga('send', 'event', 'Phone', 'Click');
             }
         </script>
         {% block js %}
