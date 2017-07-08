@@ -67,14 +67,14 @@ footer {
 .service {
 	color: $white;
 	padding: 1.5*$global-padding $global-padding;
-	transition: background-position 0.2s ease-in, box-shadow 0.2s;
+	transition: background-position 5s ease-in, box-shadow 0.2s;
 	border: none;	
 	h4, p {
 		text-shadow: 0 2px 4px $black;
 	}
 	&:hover {
 		color: $white;
-		transition: background-position 5s ease-out, box-shadow 1s;
+		transition: background-position 10s linear, box-shadow 1s;
 		box-shadow: $global-shadow-big;
 	}
 	&:active, &:focus, &:visited {
