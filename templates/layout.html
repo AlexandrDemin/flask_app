@@ -45,6 +45,13 @@
                     <div class="small-12 columns">{{copyright|safe}}</div>
                 </div>
         </footer>
+        <script type="text/javascript">
+            var callMobileBtn = document.getElementsByClassName('call-mobile');
+            callMobileBtn[0].onclick = function() {
+                yaCounter42155599.reachGoal('PHONE');
+                ga('send', 'event', 'Phone', 'Click'); 
+            }
+        </script>
         {% block js %}
         {% endblock %}
     </body>

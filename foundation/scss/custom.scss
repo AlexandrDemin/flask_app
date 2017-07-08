@@ -1,21 +1,15 @@
 $header-height: rem-calc(80px);
 
 .top-bar {
-	position: fixed;
 	box-shadow: $global-shadow;
-	width: 100%;
 	height: $header-height;
-	z-index: 1;
+	position: relative;
 }
 
 .top-bar-logo {
     display: block;
     line-height: 1;
     margin-bottom: 0;
-}
-
-.top-bar-motto {
-
 }
 
 .main-phone {
@@ -29,7 +23,6 @@ $header-height: rem-calc(80px);
 }
 
 .main-content {
-	padding-top: $header-height;
 	background: $white;
 	box-shadow: $global-shadow;
 }
@@ -40,17 +33,12 @@ $header-height: rem-calc(80px);
 }
 
 footer {
-	padding: $global-padding 0;
+	padding: $global-padding 0 $global-padding*2;
 }
 
 .background-header {
 	padding: $global-padding;
-	background-image: linear-gradient(180deg, transparent, rgba($black, 0.5)), url('../img/back-header.jpg');
-	background-size: contain, cover;
-	background-attachment: fixed;
-	background-position: 0 0, 50% -100px;
 	margin-bottom: $global-margin;
-	background-repeat: no-repeat;
 	color: $white;
 	h1 {
 		text-shadow: 0px 4px 10px rgba($black, 0.4);
@@ -72,10 +60,25 @@ footer {
 	}
 }
 
+.other-service-header {
+	margin-bottom: $global-margin/2;
+}
+
 .service {
-	padding: $global-padding;
-	h2 {
-		font-size: rem-calc(25px);
+	color: $white;
+	padding: 1.5*$global-padding $global-padding;
+	transition: background-position 0.2s ease-in, box-shadow 0.2s;
+	border: none;	
+	h4, p {
+		text-shadow: 0 2px 4px $black;
+	}
+	&:hover {
+		color: $white;
+		transition: background-position 5s ease-out, box-shadow 1s;
+		box-shadow: $global-shadow-big;
+	}
+	&:active, &:focus, &:visited {
+		color: $white;
 	}
 }
 
@@ -86,6 +89,7 @@ footer {
 	margin-bottom: 0;
 	z-index: 1;
 	border-radius: 0;
+	box-shadow: $global-shadow-top;
 }
 
 .map {
@@ -97,8 +101,16 @@ footer {
 	-webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
-@media (max-width:640px) {
+@media (min-width: map-get($breakpoints, medium)) {
+	.top-bar {
+		position: fixed;
+		width: 100%;
+		z-index: 1;
+	}
 	footer {
-		padding-bottom: $global-padding*2;
+		padding-bottom: $global-padding;
+	}
+	.main-content {
+		padding-top: $header-height;
 	}
 }

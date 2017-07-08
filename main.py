@@ -53,7 +53,7 @@ def utility_processor():
                         return url_for("RegionService", routeString = routeString, subdomain = subdomain)
     def getLen(array):
         return len(array)
-    return dict(getLinkForRegionService=getLinkForRegionService, getLen=getLen)
+    return dict(getLinkForRegionService=getLinkForRegionService, getLen=getLen, getServiceImgUrl=getServiceImgUrl)
 
 def getPathForRegionId(regionId):
     path = ""
@@ -280,9 +280,12 @@ def GoogleVerification(subdomain):
 
 @app.errorhandler(404)
 def page_not_found(error):
+    region = db.getRegionById(0)
     return render_template('404.html',
+        mainPhone = db.getPhoneByRegionId(0)['phoneString'],
+        mainPhoneMeta = db.getText("phoneDescription", "other"),
         siteName = db.getText("header", "siteName"),
-        motto = db.getText("header", "motto"),
+        motto = db.getText("header", "motto").format(region['dativeCaseName']),
         title = "Страница не найдена",
         copyright = db.getText("footer", "copyright")),404
 

@@ -1,0 +1,51 @@
+$total-columns: 12;
+
+.css-column {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: $global-margin/2;
+}
+
+@for $i from 1 through $total-columns {
+	.css-columns-small-#{$i} {
+        columns: $i;
+    }
+
+    .css-columns-small-#{$i},
+    .css-columns-medium-#{$i},
+    .css-columns-large-#{$i} {
+		padding: 0 map-get($grid-column-gutter, small);
+        column-gap: $global-margin/2;
+    }
+}
+
+@media (min-width: map-get($breakpoints, medium)) {
+	@for $i from 1 through $total-columns {
+		.css-columns-medium-#{$i} {
+            columns: $i;
+        }
+        .css-columns-small-#{$i},
+        .css-columns-medium-#{$i},
+        .css-columns-large-#{$i} {
+            padding: 0 map-get($grid-column-gutter, medium);
+        }
+    }
+}
+
+@media (min-width: map-get($breakpoints, large)) {
+	@for $i from 1 through $total-columns {
+        .css-columns-medium-#{$i}, .css-columns-large-#{$i} {
+            columns: $i;
+        }
+    }
+}
+
+@media (min-width: map-get($breakpoints, xlarge)) {
+    @for $i from 1 through $total-columns {
+        .css-columns-small-#{$i},
+        .css-columns-medium-#{$i},
+        .css-columns-large-#{$i} {
+            padding: 0;
+        }
+    }
+}

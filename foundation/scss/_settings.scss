@@ -74,6 +74,8 @@ $global-text-direction: ltr;
 $global-flexbox: false;
 $print-transparent-backgrounds: true;
 $global-shadow: 0 4px 6px rgba($dark-gray, 0.4);
+$global-shadow-big: 0 10px 16px rgba($dark-gray, 0.7);
+$global-shadow-top: 0 -4px 6px rgba($dark-gray, 0.4);
 
 @include add-foundation-colors;
 

@@ -1,0 +1,26 @@
+<style type="text/css">
+	{% for service in services %}
+		.{{service.nameTranslit}} {
+			background: radial-gradient(ellipse at center, rgba(37,38,40,0.5) 0, rgba(37,38,40,0.9) 100%), url('{{getServiceImgUrl(service, region)}}') 50% 50% / cover no-repeat;
+		}
+		.{{service.nameTranslit}}:hover {
+			background: radial-gradient(ellipse at center, rgba(37,38,40,0.7) 0, rgba(37,38,40,1) 100%), url('{{getServiceImgUrl(service, region)}}') 50% 50% / cover no-repeat;
+			background-position: 50% 50%, 50% {{service.id}}px;
+		}
+	{% endfor %}
+</style>
+<div class="row css-columns-medium-2 css-columns-large-3">
+	{% for service in services %}
+		<a class="card service {{service.nameTranslit}} css-column" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.childrenIds[0], order = True) if region !=None and region.hasChildren and getLen(region.childrenIds) == 1 else getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None) }}">
+			<h4>{{service.name}}</h4>
+			<p>{{service.description}}</p>
+			<span class="button" href="{{ getLinkForRegionService(serviceId=service.id, regionId=region.childrenIds[0], order = True) if region !=None and region.hasChildren and getLen(region.childrenIds) == 1 else getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None) }}">
+				{% if region !=None and ((region.hasChildren and getLen(region.childrenIds) == 1) or not region.hasChildren) %}
+					Подробнее
+				{% else %}
+					Уточнить регион
+				{% endif %}
+			</span>
+		</a>
+	{% endfor %}
+</div>

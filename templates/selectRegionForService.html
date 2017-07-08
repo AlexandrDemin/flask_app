@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="background-header row expanded">
+	<style type="text/css">
+		.header-{{service.nameTranslit}} {
+			background: linear-gradient(90deg, rgba(240,80,36,0.9), rgba(221,73,35,0.9)), url('{{getServiceImgUrl(service, region)}}') 50% 50% / cover no-repeat;
+		}
+	</style>
+	<div class="background-header row expanded header-{{service.nameTranslit}}">
 		<div class="row">
 			<div class="breadcrumbs">
 				<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
@@ -20,9 +25,9 @@
 		<h2>Выберите регион из списка</h2>
 		<!-- {% include 'regionSearch.html' %} -->
 	</div>
-	<div class="row">
+	<div class="row css-columns-medium-3 css-columns-large-4">
 		{% if region.id > 0 %}
-			<div class="medium-6 large-4 columns">
+			<div class="css-column">
 				<strong><a class="lvl-1-id-{{region.id}}" href="{{getLinkForRegionService(regionId=region.id, serviceId=service.id, order=True)}}">{{region.name}}</a></strong>
 				{% if region.hasChildren %}
 					<ul class="no-bullet">
@@ -40,7 +45,7 @@
 		{% if region.hasChildren %}
 			{% for subregion in region['children'] %}
 				{% if subregion.hasChildren %}
-					<div class="medium-6 large-4 columns">
+					<div class="css-column">
 							<strong>
 								<a class="lvl-2-id-{{subregion.id}}" href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id, order=True)}}">{{subregion.name}}</a>
 							</strong>
