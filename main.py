@@ -230,7 +230,7 @@ def Robots(subdomain):
 #sitemap.xml
 
 sitemapCount = 50
-lastMod = '2017-06-27'
+lastMod = '2017-07-16'
 
 @app.route('/sitemap.xml', subdomain="<subdomain>")
 def SitemapIndex(subdomain):
