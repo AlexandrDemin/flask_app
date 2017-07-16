@@ -272,7 +272,8 @@ def Sitemap(index, subdomain):
         urlRoot='http://' + subdomain + '.' + serverName,
         services = services,
         regions = regions[start:end],
-        lastMod = lastMod)
+        lastMod = lastMod,
+        subdomain = subdomain)
     response= make_response(sitemapXml)
     response.headers["Content-Type"] = "application/xml"
     return response

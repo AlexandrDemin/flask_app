@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>{{urlRoot + getLinkForRegionService(serviceId=None, regionId=None)}}</loc>
+		<loc>{{getLinkForRegionService(serviceId=None, regionId=None, subdomain = subdomain)}}</loc>
 		<lastmod>{{lastMod}}</lastmod>
 	</url>
 	{% for service in services %}
 		<url>
-			<loc>{{urlRoot + getLinkForRegionService(serviceId=service.id, regionId=None)}}</loc>
+			<loc>{{urlRoot + getLinkForRegionService(serviceId=service.id, regionId=None, subdomain = subdomain)}}</loc>
 			<lastmod>{{lastMod}}</lastmod>
 		</url>
 	{% endfor %}
