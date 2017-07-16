@@ -308,6 +308,20 @@ def MailVerificationSpb(subdomain):
         abort(404)
     return render_template('wmail_557011f651d368ddfb70a33d8e147a72.html')
 
+@app.route('/yandex_fb5d169c5c36f5d3.html', subdomain="<subdomain>")
+def YandexVerificationKrasnodar(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    return render_template('yandex_fb5d169c5c36f5d3.html')
+
+@app.route('/wmail_076dfddb21e2e2bdee0afae71729a13a.html', subdomain="<subdomain>")
+def MailVerificationKrasnodar(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    return render_template('wmail_076dfddb21e2e2bdee0afae71729a13a.html')
+
 # Error handling
 
 @app.errorhandler(404)
