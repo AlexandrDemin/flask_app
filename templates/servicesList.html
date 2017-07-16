@@ -15,7 +15,7 @@
 		<a class="card service {{service.nameTranslit}} css-column" href="{{ serviceHref }}">
 			<h4>{{service.name}}</h4>
 			<p>{{service.description}}</p>
-			<span class="button" href="{{ serviceHref }}">
+			<span class="button">
 				{% if (region !=None and ((region.hasChildren and getLen(region.childrenIds) == 1) or not region.hasChildren)) or forceOrder == True %}
 					Подробнее
 				{% else %}

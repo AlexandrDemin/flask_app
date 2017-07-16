@@ -35,8 +35,11 @@ def getText(action, stringName=""):
 	else:
 		return _textsCache[action].get(stringName)
 
-def getRandomizedTexts(action, stringName="", randomSeed = None):
-	texts = getText(action, stringName)
+def getContent(action, subdomain, serviceIdStr):
+	return _textsCache[action].get(subdomain).get(serviceIdStr)
+
+def getRandomizedTexts(action, subdomain, serviceIdStr, randomSeed):
+	texts = getContent(action, subdomain, serviceIdStr)
 	return randomize(texts, randomSeed = randomSeed)
 
 # Services

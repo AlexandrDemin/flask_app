@@ -9,7 +9,7 @@
 		<div class="row">
 			{% if parentRegions != None and parentRegions != [] %}
 				<div class="breadcrumbs">
-					<a href="{{url_for("RegionNoService", subdomain = "www")}}">Главная</a>&nbsp;/
+					<a href="{{url_for("RegionNoService", subdomain = subdomain)}}">Главная</a>&nbsp;/
 					{% for region in parentRegions %}
 						<a href="{{getLinkForRegionService(regionId=region.id)}}">{{region.name}}</a>&nbsp;/
 					{% endfor %}

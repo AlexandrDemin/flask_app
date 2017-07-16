@@ -18,13 +18,13 @@ app.config['SERVER_NAME'] = serverName
 
 @app.context_processor
 def utility_processor():
-    def getLinkForRegionService(regionId = None, serviceId = None, order = False):
+    def getLinkForRegionService(regionId = None, serviceId = None, order = False, subdomain = None):
         if regionId == None:
             if serviceId == None:
-                return url_for("RegionNoService", subdomain = 'www')
+                return url_for("RegionNoService", subdomain = 'www' if subdomain == None else subdomain)
             else:
                 service = db.getServiceById(serviceId)
-                return url_for("RegionService", routeString = service['nameTranslit'], subdomain = 'www')
+                return url_for("RegionService", routeString = service['nameTranslit'], subdomain = 'www' if subdomain == None else subdomain)
         else:
             region = db.getRegionById(regionId)
             subdomain = db.getSubdomainByMainRegionId(regionId)
@@ -114,6 +114,7 @@ def RegionNoService(subdomain):
         mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
         mainPhoneMeta = db.getText("phoneDescription", "other"),
         mainPhoneLink = db.getPhoneByRegionId(region['id'])['phoneNormal'],
+        subdomain = subdomain,
         title = db.getText("regionNoService", "title").format(region['dativeCaseName']),
         description = db.getText("regionNoService", "description").format(region['dativeCaseName']),
         keywords = db.getText("regionNoService", "keywords"),
@@ -150,6 +151,7 @@ def RegionService(routeString, subdomain):
             mainPhone = db.getPhoneByRegionId(mainRegion['id'])['phoneString'],
             mainPhoneMeta = db.getText("phoneDescription", "other"),
             mainPhoneLink = db.getPhoneByRegionId(mainRegion['id'])['phoneNormal'],
+            subdomain = subdomain,
             title = db.getText("mainRegionService", "title").format(service['name'], dativeRegionName),
             description = db.getText("mainRegionService", "description").format(service['name'], dativeRegionName, service['description']),
             keywords = db.getText("mainRegionService", "keywords").format(service['name'], dativeRegionName),
@@ -170,9 +172,10 @@ def RegionService(routeString, subdomain):
             return render_template('selectServiceForRegion.html',
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto").format(mainRegion['dativeCaseName']),
-                mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
+                mainPhone = db.getPhoneByRegionId(mainRegion['id'])['phoneString'],
                 mainPhoneMeta = db.getText("phoneDescription", "other"),
-                mainPhoneLink = db.getPhoneByRegionId(region['id'])['phoneNormal'],
+                mainPhoneLink = db.getPhoneByRegionId(mainRegion['id'])['phoneNormal'],
+                subdomain = subdomain,
                 title = db.getText("regionNoService", "title").format(region['dativeCaseName']),
                 description = db.getText("regionNoService", "description").format(region['dativeCaseName']),
                 keywords = db.getText("regionNoService", "keywords"),
@@ -189,14 +192,15 @@ def RegionService(routeString, subdomain):
                 abort(404)
             services = db.getServices()[:]
             services.remove(service)
-            content = db.getRandomizedTexts("orderService", str(service['id']), randomSeed = region['id'])
+            content = db.getRandomizedTexts("orderService", subdomain, str(service['id']), region['id'])
             content = replaceDataInContent(content, region, service)
             return render_template('orderService.html',
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto").format(mainRegion['dativeCaseName']),
-                mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
-                mainPhoneLink = db.getPhoneByRegionId(region['id'])['phoneNormal'],
+                mainPhone = db.getPhoneByRegionId(mainRegion['id'])['phoneString'],
+                mainPhoneLink = db.getPhoneByRegionId(mainRegion['id'])['phoneNormal'],
                 mainPhoneMeta = db.getText("phoneDescription", "other"),
+                subdomain = subdomain,
                 title = db.getText("orderService", "title").format(service['name'], region['dativeCaseName']),
                 description = db.getText("orderService", "description").format(service['name'], region['dativeCaseName']),
                 keywords = db.getText("orderService", "keywords"),
@@ -217,7 +221,7 @@ def Robots(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         abort(404)
-    robots = 'User-agent: *\nAllow: /\nHost: www.otkachkaseptika.ru\nsitemap: http://www.otkachkaseptika.ru/sitemap.xml'
+    robots = 'User-agent: *\nAllow: /\nHost:' + subdomain + '.' + serverName + '\nsitemap: http://' + subdomain + '.' + serverName + '/sitemap.xml'
     response= make_response(robots)
     response.headers["Content-Type"] = "text/plain"
     return response
@@ -281,17 +285,25 @@ def GoogleVerification(subdomain):
         abort(404)
     return 'google-site-verification: google450d69197dedc081.html'
 
+@app.route('/df439bf5423b.html', subdomain="<subdomain>")
+def YandexVerification(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    return 'd085889e17e4'
+
 # Error handling
 
 @app.errorhandler(404)
 def page_not_found(error):
     region = db.getRegionById(0)
     return render_template('404.html',
-        mainPhone = db.getPhoneByRegionId(0)['phoneString'],
+        mainPhone = db.getPhoneByRegionId(region['id'])['phoneString'],
         mainPhoneMeta = db.getText("phoneDescription", "other"),
         mainPhoneLink = db.getPhoneByRegionId(region['id'])['phoneNormal'],
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto").format(region['dativeCaseName']),
+        subdomain = db.getSubdomainByMainRegionId(region['id']),
         title = "Страница не найдена",
         copyright = db.getText("footer", "copyright")),404
 
