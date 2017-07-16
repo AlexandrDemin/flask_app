@@ -6,5 +6,9 @@
 	{
 		"subdomain": "spb",
 		"regionId": 3302
+	},
+	{
+		"subdomain": "krasnodar",
+		"regionId": 5973
 	}
 ]

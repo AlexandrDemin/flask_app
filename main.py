@@ -210,7 +210,7 @@ def RegionService(routeString, subdomain):
                 region = region,
                 service = service,
                 parentRegions = db.getRegionParentsSorted(region['id']),
-                regions = db.getRegionsTree(parentIds = [mainRegion['id']], depth = 2),
+                regions = db.getRegionsTree(parentIds = [mainRegion['id']], depth = 1),
                 otherServicesHeader = "Другие услуги в {}".format(region['dativeCaseName']),
                 contentBlocks = content,
                 imgUrl = getServiceImgUrl(service, region)

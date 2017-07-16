@@ -56,10 +56,10 @@
 	{% include 'callUsBottom.html' %}
 {% endblock %}
 {% block footerContent %}
-	<div class="row">
+	<div class="row css-columns-medium-3 css-columns-large-4">
 		{% for subregion in regions %}
 			{% for subregion in subregion['children'] %}
-				<div class="medium-6 large-4 columns">
+				<div class="css-column">
 					{% if subregion.hasChildren %}
 						<strong>
 							<a href="{{getLinkForRegionService(regionId=subregion.id, serviceId=service.id)}}">{{subregion.name}}</a>
