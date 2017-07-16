@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>{{getLinkForRegionService(serviceId=None, regionId=None, subdomain = subdomain)}}</loc>
+		<loc>{{urlRoot + getLinkForRegionService(serviceId=None, regionId=None, subdomain = subdomain)}}</loc>
 		<lastmod>{{lastMod}}</lastmod>
 	</url>
 	{% for service in services %}
