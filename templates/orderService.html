@@ -1,4 +1,18 @@
 {% extends "layout.html" %}
+{% block head %}
+	<meta property="og:locale" content="ru_RU">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="{{title}}">
+	<meta property="og:description" content="{{description}}">
+	<meta property="og:site_name" content="{{siteName}}">
+	<meta property="article:tag" content="{{title}}">
+	<meta property="article:section" content="{{service.name}}">
+	<meta property="og:image" content="{{imgUrl}}">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:description" content="{{description}}">
+	<meta name="twitter:title" content="{{title}}">
+	<meta name="twitter:image" content="{{imgUrl}}">
+{% endblock head %}
 {% block content %}
 	<style type="text/css">
 		.header-{{service.nameTranslit}} {

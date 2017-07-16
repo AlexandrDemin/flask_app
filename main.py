@@ -212,7 +212,8 @@ def RegionService(routeString, subdomain):
                 parentRegions = db.getRegionParentsSorted(region['id']),
                 regions = db.getRegionsTree(parentIds = [mainRegion['id']], depth = 2),
                 otherServicesHeader = "Другие услуги в {}".format(region['dativeCaseName']),
-                contentBlocks = content
+                contentBlocks = content,
+                imgUrl = getServiceImgUrl(service, region)
                 )
 
 #robots.txt
@@ -286,11 +287,25 @@ def GoogleVerification(subdomain):
     return 'google-site-verification: google450d69197dedc081.html'
 
 @app.route('/df439bf5423b.html', subdomain="<subdomain>")
-def YandexVerification(subdomain):
+def YandexVerificationMsk(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         abort(404)
     return 'd085889e17e4'
+
+@app.route('/yandex_d6b8a19aaea0ecfe.html', subdomain="<subdomain>")
+def YandexVerificationSpb(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    return render_template('yandex_d6b8a19aaea0ecfe.html')
+
+@app.route('/wmail_557011f651d368ddfb70a33d8e147a72.html', subdomain="<subdomain>")
+def MailVerificationSpb(subdomain):
+    mainRegion = db.getRegionBySubdomain(subdomain)
+    if mainRegion == None:
+        abort(404)
+    return render_template('wmail_557011f651d368ddfb70a33d8e147a72.html')
 
 # Error handling
 
