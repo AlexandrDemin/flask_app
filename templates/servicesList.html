@@ -11,7 +11,7 @@
 </style>
 <div class="row css-columns-medium-2 css-columns-large-3">
 	{% for service in services %}
-	    {% set serviceHref = getLinkForRegionService(serviceId=service.id, regionId=region.childrenIds[0], order = True) if region !=None and region.hasChildren and getLen(region.childrenIds) == 1 else getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None, order = forceOrder) %}
+	    {% set serviceHref = getLinkForRegionService(serviceId=service.id, regionId=region.childrenIds[0], order = True) if region !=None and region.hasChildren and getLen(region.childrenIds) == 1 and forceOrder == False else getLinkForRegionService(serviceId=service.id, regionId=region.id if region !=None else None, order = forceOrder) %}
 		<a class="card service {{service.nameTranslit}} css-column" href="{{ serviceHref }}">
 			<h4>{{service.name}}</h4>
 			<p>{{service.description}}</p>
