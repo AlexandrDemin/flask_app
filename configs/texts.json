@@ -1,7 +1,7 @@
 {
 	"header": {
 		"siteName": "ОткачкаСептика.ру",
-		"motto": "Ассенизация&nbsp;в&nbsp;{}"
+		"motto": "Ассенизация в&nbsp;{}"
 	},
 	"footer": {
 		"copyright": "&copy; ОткачкаСептика.ру"
@@ -11,7 +11,7 @@
 		"other": "С 9 до 20"
 	},
 	"regionNoService": {
-		"h1": "Ассенизация&nbsp;в&nbsp;{}",
+		"h1": "Ассенизация в&nbsp;{}",
 		"title": "Ассенизация в {}",
 		"description": "Ассенизация в {}",
 		"keywords": "Ассенизация в {}"

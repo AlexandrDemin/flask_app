@@ -163,7 +163,7 @@ def getRegionsByLevel(levels):
 			result.append(region)
 	return result
 
-def getRegionsTree(parentIds=None, depth=2):
+def getRegionsTree(parentIds=None, depth=1):
 	result = []
 	if parentIds == None:
 		regions = getRegionsByLevel([1])

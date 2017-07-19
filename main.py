@@ -184,7 +184,7 @@ def RegionService(routeString, subdomain):
                 services = db.getServices(),
                 region = region,
                 parentRegions = db.getRegionParentsSorted(region['id']),
-                regions = db.getRegionsTree()
+                regions = db.getRegionsTree(parentIds = [mainRegion['id']])
                 )
         if len(serviceAndRegion) > 1:
             region = db.getRegionByDativeTranslitAndMainRegion(serviceAndRegion[1], mainRegion['id'])
@@ -210,7 +210,7 @@ def RegionService(routeString, subdomain):
                 region = region,
                 service = service,
                 parentRegions = db.getRegionParentsSorted(region['id']),
-                regions = db.getRegionsTree(parentIds = [mainRegion['id']], depth = 1),
+                regions = db.getRegionsTree(parentIds = [mainRegion['id']]),
                 otherServicesHeader = "Другие услуги в {}".format(region['dativeCaseName']),
                 contentBlocks = content,
                 imgUrl = getServiceImgUrl(service, region)
