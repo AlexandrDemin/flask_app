@@ -2,8 +2,8 @@ import json
 import random
 from operator import itemgetter
 
-absolutePath = '/home/noidea91/flask_app/'
-# absolutePath = ''
+# absolutePath = '/home/noidea91/flask_app/'
+absolutePath = ''
 
 def randomize(inArray, randomSeed = None, count = None):
 	tempList = inArray[:]
