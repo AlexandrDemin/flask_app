@@ -93,9 +93,9 @@ def replaceDataInContent(content, region, service):
 
 # Redirects from no subdomains to www
 
-@app.route('/')
-def Redirect():
-    return redirect("http://www." + serverName + "/", code=301)
+# @app.route('/')
+# def Redirect():
+#     return redirect("http://www." + serverName + "/", code=301)
 
 @app.route('/<path:routeString>')
 def RedirectWithPath(routeString):
@@ -130,7 +130,7 @@ def RegionNoService(subdomain):
 def RegionService(routeString, subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        return abort(404)
+        mainRegion = 0
     serviceAndRegion = routeString.split("/")
     service = db.getServiceByNameTranslit(serviceAndRegion[0])
     if service != None:
