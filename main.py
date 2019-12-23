@@ -105,6 +105,7 @@ def replaceDataInContent(content, region, service):
 
 @app.route('/', subdomain="<subdomain>")
 def RegionNoService(subdomain):
+    print(subdomain)
     region = db.getRegionBySubdomain(subdomain)
     if region == None:
         region = 0
@@ -128,6 +129,7 @@ def RegionNoService(subdomain):
 
 @app.route('/<path:routeString>', subdomain="<subdomain>")
 def RegionService(routeString, subdomain):
+    print(subdomain)
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
         mainRegion = 0
