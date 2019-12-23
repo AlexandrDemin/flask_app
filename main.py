@@ -107,7 +107,7 @@ def replaceDataInContent(content, region, service):
 def RegionNoService(subdomain):
     region = db.getRegionBySubdomain(subdomain)
     if region == None:
-        return abort(404)
+        region = 0
     return render_template('selectServiceForRegion.html',
         siteName = db.getText("header", "siteName"),
         motto = db.getText("header", "motto").format(region['dativeCaseName']),
@@ -168,7 +168,7 @@ def RegionService(routeString, subdomain):
         if service == None:
             region = getRegionByPathAndParentId(serviceAndRegion[0], mainRegion['id'])
             if region == None:
-                abort(404)
+                region = 0
             return render_template('selectServiceForRegion.html',
                 siteName = db.getText("header", "siteName"),
                 motto = db.getText("header", "motto").format(mainRegion['dativeCaseName']),
@@ -189,7 +189,7 @@ def RegionService(routeString, subdomain):
         if len(serviceAndRegion) > 1:
             region = db.getRegionByDativeTranslitAndMainRegion(serviceAndRegion[1], mainRegion['id'])
             if region == None:
-                abort(404)
+                region = 0
             services = db.getServices()[:]
             services.remove(service)
             content = db.getRandomizedTexts("orderService", subdomain, str(service['id']), region['id'])
@@ -221,7 +221,7 @@ def RegionService(routeString, subdomain):
 def Robots(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     robots = 'User-agent: *\nAllow: /\nHost:' + subdomain + '.' + serverName + '\nsitemap: http://' + subdomain + '.' + serverName + '/sitemap.xml'
     response= make_response(robots)
     response.headers["Content-Type"] = "text/plain"
@@ -236,7 +236,7 @@ lastMod = '2017-07-16'
 def SitemapIndex(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     sitemapIndex = render_template('sitemapindex.xml',
         urlRoot='http://' + subdomain + '.' + serverName,
         sitemapCount = sitemapCount,
@@ -249,7 +249,7 @@ def SitemapIndex(subdomain):
 def Sitemap(index, subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     index = int(index)
     if index > sitemapCount:
         abort(404)
@@ -284,42 +284,42 @@ def Sitemap(index, subdomain):
 def GoogleVerification(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     return 'google-site-verification: google450d69197dedc081.html'
 
 @app.route('/df439bf5423b.html', subdomain="<subdomain>")
 def YandexVerificationMsk(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     return 'd085889e17e4'
 
 @app.route('/yandex_d6b8a19aaea0ecfe.html', subdomain="<subdomain>")
 def YandexVerificationSpb(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     return render_template('yandex_d6b8a19aaea0ecfe.html')
 
 @app.route('/wmail_557011f651d368ddfb70a33d8e147a72.html', subdomain="<subdomain>")
 def MailVerificationSpb(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     return render_template('wmail_557011f651d368ddfb70a33d8e147a72.html')
 
 @app.route('/yandex_fb5d169c5c36f5d3.html', subdomain="<subdomain>")
 def YandexVerificationKrasnodar(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     return render_template('yandex_fb5d169c5c36f5d3.html')
 
 @app.route('/wmail_076dfddb21e2e2bdee0afae71729a13a.html', subdomain="<subdomain>")
 def MailVerificationKrasnodar(subdomain):
     mainRegion = db.getRegionBySubdomain(subdomain)
     if mainRegion == None:
-        abort(404)
+        mainRegion = 0
     return render_template('wmail_076dfddb21e2e2bdee0afae71729a13a.html')
 
 # Error handling
