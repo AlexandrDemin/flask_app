@@ -204,8 +204,8 @@ def getSubdomainsCache():
 _subdomainsCache = getSubdomainsCache()
 
 def getRegionBySubdomain(subdomainString):
-	if subdomain == '':
-		subdomain = 'www'
+	if subdomainString == '':
+		subdomainString = 'www'
 	for subdomain in _subdomainsCache:
 		if subdomain['subdomain'] == subdomainString:
 			return getRegionById(subdomain['regionId'])
