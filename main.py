@@ -337,3 +337,5 @@ def page_not_found(error):
         title = "Страница не найдена",
         copyright = db.getText("footer", "copyright")),404
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
