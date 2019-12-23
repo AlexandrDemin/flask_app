@@ -97,9 +97,9 @@ def replaceDataInContent(content, region, service):
 # def Redirect():
 #     return redirect("http://www." + serverName + "/", code=301)
 
-@app.route('/<path:routeString>')
-def RedirectWithPath(routeString):
-    return redirect("http://www." + serverName + "/" + routeString, code=301)
+# @app.route('/<path:routeString>')
+# def RedirectWithPath(routeString):
+#     return redirect("http://www." + serverName + "/" + routeString, code=301)
 
 # With subdomain
 
